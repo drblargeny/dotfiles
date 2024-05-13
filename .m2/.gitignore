@@ -1,0 +1,3 @@
+# Ignore host-specific files to avoid committing to the wrong repo
+/settings@*.xml
+/toolchains@*.xml

@@ -162,4 +162,4 @@ defscrollback 10000
 backtick 0 60 60 date -Iminute
 
 # Load machine-specific configuration
-source $HOME/.screenrc.d/$HOSTNAME
+source $HOME/.screenrc.d/host.$HOSTNAME

@@ -305,8 +305,8 @@ export EDITOR=vim
 export VISUAL=vim
 
 # Bash configuration for this host
-if [ -f ~/.bashrc.d/"$HOSTNAME" ]; then
-    . ~/.bashrc.d/"$HOSTNAME" 
+if [ -f ~/.bashrc.d/host."$HOSTNAME" ]; then
+    . ~/.bashrc.d/host."$HOSTNAME" 
 fi
 
 # Load Python aliases if python command exists
