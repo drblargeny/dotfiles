@@ -1,0 +1,20 @@
+#!/bin/bash
+# Script to do md5 sums on files in a way that allows gzipped and non-zipped
+# files to be compared using the same command
+
+readlink -f "$@"    | # convert arguments to absolute paths
+sort -u             | # Sort them by name for easy comparison
+while read a; do      # read each one to perform md5sum
+    # Check to see how we're going to do the md5sum
+    if [[ ! -a "$a" ]]; then
+        # File doesn't exist, report error to stdout
+        echo "$a"': No such file or directory' 1>&2
+    elif [[ "$a" =~ \.gz$ ]]; then
+        # File appears to be gzip'd, gunzip and md5sum the contents
+        # NOTE: This allows easy comparison with unzipped files
+        echo `gunzip -c "$a" | md5sum | sed 's/-$//'`"$a"
+    else
+        # File appears to be a normal file, md5sum it
+        md5sum "$a"
+    fi
+done

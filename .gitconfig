@@ -1,0 +1,12 @@
+[user]
+	# Use GIT_AUTHOR_NAME and GIT_COMMITTER_NAME instead of user.name
+	# Use GIT_AUTHOR_EMAIL and GIT_COMMITTER_EMAIL instead of user.email
+[core]
+	excludesfile = ~/.gitignore_global
+	filemode = false
+[gui]
+	encoding = utf-8
+[credential]
+	helper = manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true

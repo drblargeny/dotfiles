@@ -1,0 +1,58 @@
+# If winpty is installed, check for presence of programs known to be affected by a mintty terminal instead of a windows one
+# https://github.com/rprichard/winpty#winpty
+if command -v winpty > /dev/null 2>&1; then
+    # Function for setting up a winpty alias
+    function setWinptyAlias() {
+      alias="$1"
+      prefix="$2"
+      suffix="$3"
+      alias $alias="winpty ${prefix}${alias}${suffix}"
+    }
+    # function to reduce duplication when setting up winpty aliases
+    function checkAndSetWinptyAlias() {
+      alias="$1"
+      prefix="$2"
+      suffix="$3"
+      if command -v $alias > /dev/null 2>&1; then
+        setWinptyAlias "${alias}" "${prefix}" "${suffix}"
+      fi
+    }
+
+    # Setup aliases for executables that don't have a prefix or suffix
+    while read alias; do
+      checkAndSetWinptyAlias "${alias}"
+    done <<alias
+http
+node
+alias
+
+    # Setup aliases for executables that have a .cmd suffix
+    while read alias_cmd; do
+      checkAndSetWinptyAlias "${alias_cmd}" '' '.cmd'
+    done <<alias.cmd
+erb
+grunt
+gulp
+irb
+npm
+npx
+rake
+rdoc
+ri
+ridk
+trash
+alias.cmd
+
+    # Check for Java 9 jshell
+    if [[ -n "$JAVA_9_HOME" && -a "$JAVA_9_HOME"/bin/jshell ]]; then
+        setWinptyAlias jshell "\"\$JAVA_9_HOME/bin/" '"'
+    fi
+    # Check for Java 10 jshell
+    if [[ -n "$JAVA_10_HOME" && -a "$JAVA_10_HOME"/bin/jshell ]]; then
+        setWinptyAlias jshell "\"\$JAVA_10_HOME/bin/" '"'
+    fi
+    # Check for Java 11 jshell
+    if [[ -n "$JAVA_11_HOME" && -a "$JAVA_11_HOME"/bin/jshell ]]; then
+        setWinptyAlias jshell "\"\$JAVA_11_HOME/bin/" '"'
+    fi
+fi

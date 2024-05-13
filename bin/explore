@@ -1,0 +1,39 @@
+#!/bin/bash
+# Opens Windows Explorer to the path specified.
+#
+# Important Points:
+# - All arguments to this script are treated as a single argument for explorer.exe
+#   If the path contains single spaces, it doesn't need to be wrapped in ""
+
+# Check for debugging options
+if [[ -n "$DEBUG" ]]; then
+    # enable tracing when in debug mode
+    set -x
+fi
+
+# Determine the target path
+if [[ $# == 0 ]]; then
+    # No args provided, use the current path
+    TARGET="."
+else
+    # the target is all of the given args combined
+    TARGET="$*"
+fi
+
+# Convert this to a Cygwin path (in case is isn't)
+TARGET=`/usr/bin/cygpath "$TARGET"`
+
+# Get the absolute path for the target (following any symlinks)
+TARGET=`/usr/bin/readlink -f "$TARGET"`
+
+# Check to see if the target actually exists
+if [[ ! -a "$TARGET" ]]; then
+    echo "Specified target doesn't exist: $TARGET" 1>&2
+    exit 1
+fi
+
+# Translate the path for Windows format
+TARGET=`/usr/bin/cygpath -w "$TARGET"`
+
+# Open the Windows path with explorer.exe
+explorer.exe "$TARGET"

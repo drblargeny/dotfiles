@@ -1,0 +1,16 @@
+# Aliases for my shell-scripts project
+# Expects that project's main directory to be on the PATH
+
+# Alias for git-dir*.sh scripts to save a couple keystrokes
+alias git.=git-dir.sh
+alias git.branch=git-dir-branch.sh
+
+# Alias for wmvn.sh script to save a couple of keystrokes
+alias mvn.=wmvn.sh
+
+# Alias for rsync-jlog.sh script to save a couple keystrokes
+alias rsync.=rsync-jlog.sh
+
+function REC() {
+  RequestExtractor.sh "$@" > "$1" && code "$1" < /dev/null
+}

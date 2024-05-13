@@ -1,0 +1,6 @@
+# Global Sprin DevTools configuration
+# https://docs.spring.io/spring-boot/docs/current/reference/html/using.html#using.devtools.globalsettings
+
+spring.devtools:
+  # Disable LiveReload because LanDesk uses that port
+  livereload.enabled: false

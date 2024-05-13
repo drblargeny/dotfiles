@@ -1,0 +1,56 @@
+# This section sets up JSERVER, JDEPLOY, JLOG, JCONF, JLIB
+
+# Cygwin path detection
+PATHCMD=readlink
+command -v cygpath > /dev/null 2>&1 && PATHCMD=cygpath
+
+# Each should already be set as a Windows environment variable, if not the new value will be displayed
+if [ -z "$JSERVER" ]; then
+	if [ -n "$JBOSS_HOME" ]; then
+		export JSERVER=$($PATHCMD "$JBOSS_HOME")/server/default
+		echo JSERVER=$JSERVER
+	fi
+else
+	export JSERVER=$($PATHCMD "$JSERVER")
+fi
+if [ -z "$JDEPLOY" ]; then
+	if [ -n "$JSERVER" ]; then
+		export JDEPLOY=$JSERVER/deploy
+		echo JDEPLOY=$JDEPLOY
+	fi
+else
+	export JDEPLOY=$($PATHCMD "$JDEPLOY")
+fi
+if [ -z "$JLOG" ]; then
+	if [ -n "$JSERVER" ]; then
+		export JLOG=$JSERVER/log
+		echo JLOG=$JLOG
+	fi
+else
+	export JLOG=$($PATHCMD "$JLOG")
+fi
+if [ -z "$JCONF" ]; then
+	if [ -n "$JSERVER" ]; then
+		export JCONF=$JSERVER/conf
+		echo JCONF=$JCONF
+	fi
+else
+	export JCONF=$($PATHCMD "$JCONF")
+fi
+if [ -z "$JLIB" ]; then
+	if [ -n "$JSERVER" ]; then
+		export JLIB=$JSERVER/lib
+		echo JLIB=$JLIB
+	fi
+else
+	export JLIB=$($PATHCMD "$JLIB")
+fi
+
+if [ -n "$JLOG" ]; then
+	alias jlog='less -S $JLOG/server.log'
+fi
+
+# Add JBoss server scripts to PATH
+if [ -a /opt/jboss/bin ]; then
+	export PATH+=:/opt/jboss/bin
+fi
