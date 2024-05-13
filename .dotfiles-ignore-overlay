@@ -1,0 +1,14 @@
+/*
+!/.bashrc.d/*
+/.bashrc.d/jboss
+/.bashrc.d/python-aliases
+/.bashrc.d/setupPrompt
+/.bashrc.d/setWinptyAlias
+/.bashrc.d/ssh-agent
+!/.m2/*
+/.m2/README.txt
+!/.screenrc.d/*
+/.screenrc.d/README.txt
+!/.ssh
+/.ssh/.gitignore
+/.ssh/config.d/.gitignore

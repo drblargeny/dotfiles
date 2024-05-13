@@ -19,7 +19,13 @@ fi
 # Define the .git folder 
 GIT_DIR="${2:-.dotfiles}"
 
-[ "$GIT_DIR" == '.dotfiles' ] && CONFIG_COMMAND=config || CONFIG_COMMAND=config.
+if [ "$GIT_DIR" == '.dotfiles' ]; then
+  CONFIG_COMMAND=config
+  IGNORE_FILE=.dotfiles-ignore
+else
+  CONFIG_COMMAND=config.
+  IGNORE_FILE=.dotfiles-ignore-overlay
+fi
 
 # Define the worktree folder
 TREE_DIR='.'
@@ -38,9 +44,9 @@ if [[ ! -d "$GIT_DIR" ]]; then
   # And clone the repo if it doesn't
   git clone --bare "$GIT_URL" "$GIT_DIR" && echo 'Clone complete' 1>&2
 
-  # Setup the repo to exclude files in  the .dotfiles-ignore file
+  # Setup the repo to exclude files in the IGNORE_FILE file
   #echo '*' >> "${GIT_DIR}/info/exclude"
-  dotfiles config --local core.excludesfile .dotfiles-ignore
+  dotfiles config --local core.excludesfile $IGNORE_FILE
 
   # Set upstream for git push
   dotfiles push --set-upstream origin master
