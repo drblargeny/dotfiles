@@ -1,6 +1,38 @@
 # Don't ignore this bin folder because it contains custom scripts
 !/bin
 
+# .bashrc.d
+# Host machine-specific files are ignored by default to prevent accidental
+# commits into the wrong repo
+/.bashrc.d/host.*
+
+# .m2
+/.m2/repository/
+/.m2/settings-security.xml
+/.m2/settings.xml
+/.m2/toolchains.xml
+# Ignore host-specific files to avoid committing to the wrong repo
+/.m2/settings@*.xml
+/.m2/toolchains@*.xml
+
+# .screenrc.d
+# Ignore host-specific and overlay files to avoid committing to the wrong repo
+/.screenrc.d/host.*
+/.screenrc.d/overlay.*
+
+# .ssh
+/.ssh/*
+!/.ssh/.gitignore
+!/.ssh/config
+!/.ssh/config.d
+/.ssh/config.d/localhost
+/.ssh/config.d/overlay.*
+
+# Files from .dotfiles-overlay
+/.digrc
+/Oracle/
+/etc/
+
 # Do ignore this stuff
 *.stackdump
 /.bash_history
@@ -19,10 +51,6 @@
 /.gtk-bookmarks
 /.idlerc
 /.lesshst
-/.m2/repository/
-/.m2/settings-security.xml
-/.m2/settings.xml
-/.m2/toolchains.xml
 /.parallel
 /.python-gitlab.cfg
 /.python_history

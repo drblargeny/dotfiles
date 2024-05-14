@@ -1,3 +1,0 @@
-# Host machine-specific files are ignored by default to prevent accidental
-# commits into the wrong repo
-/host.*
