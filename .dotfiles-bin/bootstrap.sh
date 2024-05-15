@@ -44,12 +44,21 @@ if [[ ! -d "$GIT_DIR" ]]; then
   # And clone the repo if it doesn't
   git clone --bare "$GIT_URL" "$GIT_DIR" && echo 'Clone complete' 1>&2
 
+  # Stop treating this as a bare repository
+  dotfiles config core.bare false
+
+  # Enable the ref log
+  dotfiles config core.logallrefupdates true
+
+  # Set remote fetch info
+  dotfiles config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+
+  # Automatically assume --set-upstream for default push
+  dotfiles config push.autosetupremote true
+
   # Setup the repo to exclude files in the IGNORE_FILE file
   #echo '*' >> "${GIT_DIR}/info/exclude"
   dotfiles config --local core.excludesfile $IGNORE_FILE
-
-  # Set upstream for git push
-  dotfiles push --set-upstream origin master
 
   # If running in Cygwin Windows, ignore file permissions
   if [ -f /usr/bin/cygpath ] ; then
