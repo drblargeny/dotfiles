@@ -3,17 +3,19 @@
 These are my [*dotfiles*](https://en.wikipedia.org/wiki/Configuration_file) 
 so I can replicate them, share them, and track changes to them.
 
-## Background
+My approach is to use non-standard names for the Git repo data (e.g.,
+`.dotfiles` instead of `.git`, and `.dotfiles-ignore` instead of
+`.gitignore`).  This avoids unexpected interactions with other Git projects in
+the users `HOME` directory.  However, it requires a few command line options
+for `git` to work as expected.  So, this also sets up a `config` alias/command
+that replaces the `git` command and necessary options.
 
-There are many approaches for versioning dotfiles:
-1. <https://dotfiles.github.io/>
-1. <https://wiki.archlinux.org/index.php/Dotfiles>
-1. <https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/>
-
-I will start by using the bare repository approach, and I'll try to use 
-configuration to vary settings between different machines.  Failing that, I will 
-try branches; and ultimately defaulting to using a no-bare repository with 
-installation/synch scripts if necessary.
+The design also recognizes that certain machine deployments will require some
+configuration that can't be publicly versioned.  To this end, this supports
+installing a supplemental `.dotfiles-overlay` repository alongside the public
+one.  This was the "overlay" repository can be protected and hold sensitive
+information that can't be added to the public repository.  A `config.`
+alias/command is available for maintaining the "overlay" repository.
 
 ## Installation
 
@@ -99,3 +101,10 @@ installation/synch scripts if necessary.
     ```shell
     ~/.dotfiles-bin/bootstrap.sh <OVERLAY_URI> .dotfiles-overlay
     ```
+
+## Additional Resources
+
+1. <https://dotfiles.github.io/>
+1. <https://wiki.archlinux.org/index.php/Dotfiles>
+1. <https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/>
+
