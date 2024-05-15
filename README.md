@@ -102,6 +102,14 @@ alias/command is available for maintaining the "overlay" repository.
     ~/.dotfiles-bin/bootstrap.sh <OVERLAY_URI> .dotfiles-overlay
     ```
 
+## Configuration
+
+* [Bash](.bashrc.d/README.md)
+* [Maven](.m2/README.md)
+* [Screen](.screenrc.d/README.md)
+* [SSH](.ssh/README.md)
+
+
 ## Additional Resources
 
 1. <https://dotfiles.github.io/>
