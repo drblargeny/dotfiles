@@ -1,7 +1,10 @@
 # Dotfiles
 
-These are my [*dotfiles*](https://en.wikipedia.org/wiki/Configuration_file) 
-so I can replicate them, share them, and track changes to them.
+These are my [*dotfiles*](https://en.wikipedia.org/wiki/Configuration_file) so
+I can replicate them, share them, and track changes to them. The main/public
+project is on [GitHub](https://github.com/drblargeny/dotfiles). If this is not
+that project, then this is either one of my "overlay" repositories with
+sensitive configurations or someone else's fork.
 
 My approach is to use non-standard names for the Git repo data (e.g.,
 `.dotfiles` instead of `.git`, and `.dotfiles-ignore` instead of
@@ -18,6 +21,8 @@ information that can't be added to the public repository.  A `config.`
 alias/command is available for maintaining the "overlay" repository.
 
 ## Installation
+
+### Main/public repo
 
 1. Decide if you will clone this project over HTTPS or SSH and ensure you meet
     the necessary requirements.
@@ -95,12 +100,21 @@ alias/command is available for maintaining the "overlay" repository.
     config push
     ```
 
-1. If you're applying an additional overlay-repository for sensitive content,
-    use the bootstrap.sh script to load that project alongside the main files
+### "Overlay" repo
+
+This installs an optional repository for sensitive content that shouldn't be
+public.
+
+1. Make sure the main/public repo is installed completely
+
+1. Use the bootstrap.sh script to load that project alongside the main files
 
     ```shell
     ~/.dotfiles-bin/bootstrap.sh <OVERLAY_URI> .dotfiles-overlay
     ```
+
+1. Pop any stashed changes and reconcile any files using the `config.`
+   alias/command.
 
 ## Configuration
 
