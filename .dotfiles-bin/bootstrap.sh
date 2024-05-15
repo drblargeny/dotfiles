@@ -56,6 +56,9 @@ if [[ ! -d "$GIT_DIR" ]]; then
   # Automatically assume --set-upstream for default push
   dotfiles config push.autosetupremote true
 
+  # Assign upstream for fetch/pull
+  dotfiles branch --set-upstream-to=origin/`config branch --show-current`
+
   # Setup the repo to exclude files in the IGNORE_FILE file
   #echo '*' >> "${GIT_DIR}/info/exclude"
   dotfiles config --local core.excludesfile $IGNORE_FILE
