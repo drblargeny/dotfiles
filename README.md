@@ -57,12 +57,13 @@ installation/synch scripts if necessary.
     changes to the dotfiles in your `HOME` directory.
 
     * ℹ️ Make sure your local Git profile is fully configured before you make
-        any changes.  This profile expects that you set the
-        [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)
-        and
-        [`GIT_COMMITTER_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTEREMAILcode)
-        environment variables to assign the email address instead of using the
-        global email address.
+        any changes.  This profile expects that you set these environment
+        variables for the Git author/committer details to avoid putting them
+        in the [.gitconfig](.gitconfig) file
+            * [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)
+            * [`GIT_AUTHOR_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHORNAMEcode)
+            * [`GIT_COMMITTER_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTEREMAILcode)
+            * [`GIT_COMMITTER_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTERNAMEcode)
 
 1. Pop any stashed changes
 
