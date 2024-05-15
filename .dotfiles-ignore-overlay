@@ -4,7 +4,7 @@
 !/.bashrc.d/overlay.*
 
 !/.m2
-/.m2/README.txt
+/.m2/README.md
 /.m2/repository
 /.m2/settings-security.xml
 /.m2/settings.xml
