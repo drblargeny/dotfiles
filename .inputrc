@@ -65,6 +65,13 @@ $endif
 "\eOH": beginning-of-line
 "\eOF": end-of-line
 
+# Be more intelligent when autocompleting by also looking at the text after
+# the cursor. For example, when the current line is "cd ~/src/mozil", and
+# the cursor is on the "z", pressing Tab will not autocomplete it to "cd
+# ~/src/mozillail", but to "cd ~/src/mozilla". (This is supported by the
+# Readline used by Bash 4.)
+set skip-completed-text on
+
 # Allow 8-bit input/output
 set meta-flag on
 # Treat 8-bit chars as chars and not escape sequences
@@ -80,8 +87,8 @@ set output-meta on
   #set bell-style visible
 
   # Filename completion/expansion
-  #set completion-ignore-case on
-  #set show-all-if-ambiguous on
+  set completion-ignore-case on
+  set show-all-if-ambiguous on
 
   # Expand homedir name
   #set expand-tilde on
@@ -92,6 +99,8 @@ set output-meta on
 
   # Match all files
   #set match-hidden-files on
+  # Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+  set match-hidden-files off
 
   # 'Magic Space'
   # Insert a space character then performs
