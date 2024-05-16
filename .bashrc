@@ -309,6 +309,11 @@ if [ -f ~/.bashrc.d/host."$HOSTNAME" ]; then
     . ~/.bashrc.d/host."$HOSTNAME" 
 fi
 
+# Auto-start ssh-agent
+if [ -f ~/.bashrc.d/.ssh-agent-autostart-enabled ]; then
+    . ~/.bashrc.d/ssh-agent
+fi
+
 # Load Python aliases if python command exists
 [ -n "$(command -v python)" ] && . ~/.bashrc.d/python-aliases
 

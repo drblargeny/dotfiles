@@ -5,6 +5,8 @@
 # Host machine-specific files are ignored by default to prevent accidental
 # commits into the wrong repo
 /.bashrc.d/host.*
+# Ignore the flag for auto-starting the ssh-agent
+/.bashrc.d/.ssh-agent-autostart-enabled
 
 # .m2
 /.m2/repository/
