@@ -107,3 +107,6 @@ set output-meta on
   # a history expansion in the line
   #Space: magic-space
 #$endif
+
+# Use Alt/Meta + Delete to delete the preceding word
+"\e[3;3~": kill-word
