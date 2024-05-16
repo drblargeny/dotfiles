@@ -4,14 +4,6 @@
 # Run if the agent isn't detected and this is an interactive shell
 if [ -z "$SSH_AUTH_SOCK" ] && [ -n "$PS1" ]; then
 
-    function add-ssh-keys() {
-        # Add standard keys
-        ssh-add
-
-        # Add any custom keys
-        ls ~/.ssh/*-id_*[^p][^u][^b] > /dev/null 2>&1 && ssh-add ~/.ssh/*-id_*[^p][^u][^b]
-    }
-
     env=~/.ssh/agent.env
 
     agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
@@ -27,9 +19,9 @@ if [ -z "$SSH_AUTH_SOCK" ] && [ -n "$PS1" ]; then
 
     if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
         agent_start && agent_run_state=1
-        add-ssh-keys
+        ~/bin/ssh-add-my-keys
     elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-        add-ssh-keys
+        ~/bin/ssh-add-my-keys
     fi
 
     unset env
