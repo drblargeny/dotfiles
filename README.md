@@ -123,10 +123,10 @@ public.
 * [Screen](.screenrc.d/README.md)
 * [SSH](.ssh/README.md)
 
-
 ## Additional Resources
 
-1. <https://dotfiles.github.io/>
-1. <https://wiki.archlinux.org/index.php/Dotfiles>
-1. <https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/>
-
+1. [GitHub does dotfiles](https://dotfiles.github.io/)
+1. [Dotfiles - ArchWiki](https://wiki.archlinux.org/index.php/Dotfiles)
+1. [Dotfiles: Best way to store in a bare git repository](https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/)
+1. [Cross-platform, cross-shell dotfiles](https://github.com/renemarc/dotfiles?tab=readme-ov-file)
+1. [dotfiles for Windows, including Developer-minded system defaults](https://github.com/jayharris/dotfiles-windows)
