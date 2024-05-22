@@ -49,6 +49,7 @@
 /.gem
 /.gimp-2.8
 /.git-for-windows-updater
+/.gitignore
 /.gnupg
 /.gtk-bookmarks
 /.idlerc
