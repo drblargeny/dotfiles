@@ -54,32 +54,15 @@ alias/command is available for maintaining the "overlay" repository.
         bootstrap.sh 'git@github.com:drblargeny/dotfiles.git'
         ```
 
-1. If you started an ssh-agent just for an SSH connection to GitHub, you
-    should shutdown the running agent before restarting the shell.
-
-1. Restart your shell to load the new settings and activate the new `config`
-    alias/command
-
-1. The `config` alias/command replaces the `git` command when making versioned
+1. Source the `~/.dotfiles-bin/config-alias.sh` file to enable the `config`
+    alias/command, which replaces the `git` command when making versioned
     changes to the dotfiles in your `HOME` directory.
-
-    * ℹ️ Make sure your local Git profile is fully configured before you make
-        any changes.  This profile expects that you set these environment
-        variables for the Git author/committer details to avoid putting them
-        in the [.gitconfig](.gitconfig) file
-            * [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)
-            * [`GIT_AUTHOR_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHORNAMEcode)
-            * [`GIT_COMMITTER_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTEREMAILcode)
-            * [`GIT_COMMITTER_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTERNAMEcode)
-
-1. Pop any stashed changes
-
-    ```shell
-    config stash pop
-    ```
 
 1. Reconcile any differences between your existing files and the files from
     this project.
+
+    * Start with the `~/.bashrc` file to ensure the `config` command is loaded
+      when the shell restarts.
 
     1. Check for differences
 
@@ -93,7 +76,25 @@ alias/command is available for maintaining the "overlay" repository.
         config difftool FILE
         ```
 
+1. If you started an ssh-agent just for an SSH connection to GitHub, you
+    should shutdown the running agent before restarting the shell.
+
+1. Restart your shell to load the new settings and activate the new `config`
+    alias/command
+
 1. Commit and push any changes using the `config` alias/command
+
+    * ℹ️ Make sure your local Git profile is fully configured before you make
+        any changes.  This profile expects that you set these environment
+        variables for the Git author/committer details to avoid putting them
+        in the [.gitconfig](.gitconfig) file.  You can use the
+        `~/.bashrc.d/host.$HOSTNAME` file to load custom settings for this
+        host.
+
+        * [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)
+        * [`GIT_AUTHOR_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHORNAMEcode)
+        * [`GIT_COMMITTER_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTEREMAILcode)
+        * [`GIT_COMMITTER_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTERNAMEcode)
 
     ```shell
     config commit
@@ -110,7 +111,7 @@ public.
 1. Use the bootstrap.sh script to load that project alongside the main files
 
     ```shell
-    ~/.dotfiles-bin/bootstrap.sh <OVERLAY_URI> .dotfiles-overlay
+    ~/.dotfiles-bin/bootstrap.sh <OVERLAY_URI> .dotfiles-overlay branch
     ```
 
 1. Pop any stashed changes and reconcile any files using the `config.`

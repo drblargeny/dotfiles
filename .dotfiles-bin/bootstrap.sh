@@ -80,13 +80,13 @@ dotfiles reset
 dotfiles status --short | sed -E '/^ ?D/!d;s/^ ?D +//' | while read f; do
   dotfiles restore "$f"
 done
-# 3. Stash the modifications
-dotfiles stash push -m 'Original profile'
 
-echo Original profile stashed.  Restart shell to enable $CONFIG_COMMAND command to process changes.
+echo Source this to enable the $CONFIG_COMMAND command to manage changes
+echo . ~/.dotfiles-bin/config-alias.sh
 echo 
-echo Then restore the stashed changes:
-echo $CONFIG_COMMAND stash pop
+echo Then review the current differences
+echo $CONFIG_COMMAND status
 echo 
-echo For each modified file, use the difftool to compare and merge the files
+echo For each modified file, use the difftool to compare and merge the files.
+echo Recommend starting with .bashrc to ensure $CONFIG_COMMAND is auto-loaded.
 echo $CONFIG_COMMAND difftool .bashrc
