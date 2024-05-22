@@ -57,9 +57,10 @@ function setupPrompt() {
         # Current term supports a status line, use as-is
         STATUS_LINE_TERM="$TERM"
     elif [[ "$TERM" =~ ^xterm.* ]]; then
-        # xterms can use the window title
-        # but they need a special term type to recognize this
-        STATUS_LINE_TERM='xterm+sl'
+        # xterms can usually use the window title, but they sometimes need a
+        # special term type to recognize this. Test for this type and use it
+        # when available
+        infocmp 'xterm+sl' >/dev/null 2>&1 && STATUS_LINE_TERM='xterm+sl' || STATUS_LINE_TERM=
     elif [[ "$TERM" =~ ^screen.* ]]; then
         # screen terminals can use either the hardstatus line or the window title
         # but they need a special term type to recognize this
