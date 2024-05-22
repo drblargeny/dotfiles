@@ -20,6 +20,14 @@ if [ -z "$TERM__RESET_ATTRIBUTES" ]; then
         export     TERM__RED=`tput setaf  1`
         export  TERM__YELLOW=`tput setaf  3`
         export   TERM__WHITE=`tput setaf  7`
+    elif [[ "$TERM__COLORS" < 2 ]]; then
+    # No support for colors
+        export    TERM__BLUE=''
+        export   TERM__GREEN=''
+        export TERM__MAGENTA=''
+        export     TERM__RED=''
+        export  TERM__YELLOW=''
+        export   TERM__WHITE=''
     else
     # Support for 8 colors
         export    TERM__BLUE=`tput bold; tput setaf  4`
