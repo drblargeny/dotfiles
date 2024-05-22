@@ -71,6 +71,9 @@ if [[ ! -d "$GIT_DIR" ]]; then
   if [ -f /usr/bin/cygpath ] ; then
     dotfiles config --local core.filemode false
   fi
+
+  # Set upstream for push
+  dotfiles branch "$GIT_BRANCH" -u origin/"$GIT_BRANCH"
 fi
 
 # Then restore the files in place and do a merge when there are conflicts
