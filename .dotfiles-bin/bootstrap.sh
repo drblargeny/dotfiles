@@ -19,6 +19,9 @@ fi
 # Define the .git folder 
 GIT_DIR="${2:-.dotfiles}"
 
+# Define the branch to use
+GIT_BRANCH="${3:-main}"
+
 if [ "$GIT_DIR" == '.dotfiles' ]; then
   CONFIG_COMMAND=config
   IGNORE_FILE=.dotfiles-ignore
@@ -58,7 +61,7 @@ if [[ ! -d "$GIT_DIR" ]]; then
 
   # Assign upstream for fetch/pull
   # Try to use main, and fall back to master
-  dotfiles branch --set-upstream-to=origin/main || dotfiles branch --set-upstream-to=origin/master
+  dotfiles branch --set-upstream-to=origin/"$GIT_BRANCH"
 
   # Setup the repo to exclude files in the IGNORE_FILE file
   #echo '*' >> "${GIT_DIR}/info/exclude"
