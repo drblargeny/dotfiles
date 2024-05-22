@@ -303,9 +303,17 @@ if [ -z "$TMP" ]; then
 #    echo TMP=$TMP
 fi
 
-# Include personal ~/bin in the PATH
-# NOTE: Use absolute path to avoid security issues with relative paths
-export PATH=`readlink -f ~/bin`":$PATH"
+# set PATH so it includes user's private bin if it exists
+if [ -d "~/bin" ] ; then
+    # NOTE: Use absolute path to avoid security issues with relative paths
+    export PATH=`readlink -f ~/bin`":$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "~/.local/bin" ] ; then
+    # NOTE: Use absolute path to avoid security issues with relative paths
+    export PATH=`readlink -f ~/.local/bin`":$PATH"
+fi
 
 # Setup vimasaur (vim as our) editor
 export SVN_EDITOR=vim
