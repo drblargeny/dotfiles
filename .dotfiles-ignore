@@ -52,6 +52,7 @@
 /.gitignore
 /.gnupg
 /.gtk-bookmarks
+/.hushlogin
 /.idlerc
 /.lesshst
 /.motd_shown
