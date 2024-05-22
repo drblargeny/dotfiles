@@ -304,15 +304,15 @@ if [ -z "$TMP" ]; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "~/bin" ] ; then
+if [ -d "$HOME/bin" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH=`readlink -f ~/bin`":$PATH"
+    export PATH="$HOME/bin:$PATH"
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "~/.local/bin" ] ; then
+if [ -d "$HOME/.local/bin" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH=`readlink -f ~/.local/bin`":$PATH"
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
 # Setup vimasaur (vim as our) editor
