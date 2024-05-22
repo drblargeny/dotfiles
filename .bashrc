@@ -77,7 +77,7 @@ shopt -s complete_fullquote
 
 # whenever bash sees foo.exe during completion, it checks if foo is the
 # same file and strips the suffix
-shopt -s completion_strip_exe
+[[ "$BASH_VERSION" > '5.2' ]] && shopt -s completion_strip_exe
 
 # bash will not attempt to search the PATH for possible completions when
 # completion is  attempted on an empty line
