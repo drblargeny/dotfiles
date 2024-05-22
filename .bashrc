@@ -149,7 +149,7 @@ alias fgrep='fgrep --color=auto'              # show differences in colour
 alias ls='ls -hp --color=auto --quoting-style=escape'   # add slash indicators to directories in colour and escape with slashes
 alias dir='ls --color=auto --format=vertical'
 alias vdir='ls --color=auto --format=long'
-alias ll='ls -l'                              # long list
+alias ll='ls -l --quoting-style=escape'      # long list
 alias la='ls -A'                              # all but . and ..
 # alias l='ls -CF'                              #
 
