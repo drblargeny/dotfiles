@@ -75,7 +75,7 @@ fi
 
 # Then restore the files in place and do a merge when there are conflicts
 # 1. Refresh the index based on the current changes
-dotfiles reset --refresh
+dotfiles reset
 # 2. Restore any deleted files
 dotfiles status --short | sed -E '/^ ?D/!d;s/^ ?D +//' | while read f; do
   dotfiles restore "$f"
