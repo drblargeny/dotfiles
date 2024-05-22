@@ -108,6 +108,10 @@ export HISTCONTROL=ignoreboth
 # Add timestamp to history lines
 export HISTTIMEFORMAT="%F %T "
 
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
 # Aliases
 #
 # Some people use a different file for aliases
