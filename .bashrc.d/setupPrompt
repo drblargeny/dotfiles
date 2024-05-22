@@ -1,8 +1,10 @@
 # Only read commands from the terminal once since it's expensive
 if [ -z "$TERM__RESET_ATTRIBUTES" ]; then
+    # Determine how many colors are supported
+    TERM__COLORS=`tput colors`
     # Setup variables that contain control sequences for colors I like to use
     export TERM__RESET_ATTRIBUTES=`tput sgr0`
-    if (( `tput colors` > 16 )); then
+    if (( "$TERM__COLORS" > 16 )); then
     # Support for more than 16 colors (e.g. xterm-256color, screen-256color)
         export    TERM__BLUE=`tput setaf $((36*2 + 6*2 + 5 +16))`
         export   TERM__GREEN=`tput setaf $((36*0 + 6*3 + 0 +16))`
@@ -10,7 +12,7 @@ if [ -z "$TERM__RESET_ATTRIBUTES" ]; then
         export     TERM__RED=`tput setaf $((36*3 + 6*0 + 0 +16))`
         export  TERM__YELLOW=`tput setaf $((36*3 + 6*3 + 0 +16))`
         export   TERM__WHITE=`tput setaf $((36*3 + 6*3 + 3 +16))`
-    elif [[ `tput colors` > 8 ]]; then
+    elif [[ "$TERM__COLORS" > 8 ]]; then
     # Support for more than 8 colors
         export    TERM__BLUE=`tput setaf 12`
         export   TERM__GREEN=`tput setaf  2`
