@@ -1,47 +1,86 @@
-# Only read commands from the terminal once since it's expensive
-if [ -z "$TERM__RESET_ATTRIBUTES" ]; then
-    # Determine how many colors are supported
-    TERM__COLORS=`tput colors`
-    # Setup variables that contain control sequences for colors I like to use
-    export TERM__RESET_ATTRIBUTES=`tput sgr0`
-    if (( "$TERM__COLORS" > 16 )); then
-    # Support for more than 16 colors (e.g. xterm-256color, screen-256color)
-        export    TERM__BLUE=`tput setaf $((36*2 + 6*2 + 5 +16))`
-        export   TERM__GREEN=`tput setaf $((36*0 + 6*3 + 0 +16))`
-        export TERM__MAGENTA=`tput setaf $((36*3 + 6*0 + 3 +16))`
-        export     TERM__RED=`tput setaf $((36*3 + 6*0 + 0 +16))`
-        export  TERM__YELLOW=`tput setaf $((36*3 + 6*3 + 0 +16))`
-        export   TERM__WHITE=`tput setaf $((36*3 + 6*3 + 3 +16))`
-    elif [[ "$TERM__COLORS" > 8 ]]; then
-    # Support for more than 8 colors
-        export    TERM__BLUE=`tput setaf 12`
-        export   TERM__GREEN=`tput setaf  2`
-        export TERM__MAGENTA=`tput setaf  5`
-        export     TERM__RED=`tput setaf  1`
-        export  TERM__YELLOW=`tput setaf  3`
-        export   TERM__WHITE=`tput setaf  7`
-    elif [[ "$TERM__COLORS" < 2 ]]; then
-    # No support for colors
-        export    TERM__BLUE=''
-        export   TERM__GREEN=''
-        export TERM__MAGENTA=''
-        export     TERM__RED=''
-        export  TERM__YELLOW=''
-        export   TERM__WHITE=''
-    else
-    # Support for 8 colors
-        export    TERM__BLUE=`tput bold; tput setaf  4`
-        export   TERM__GREEN=`tput setaf  2`
-        export TERM__MAGENTA=`tput setaf  5`
-        export     TERM__RED=`tput setaf  1`
-        export  TERM__YELLOW=`tput setaf  3`
-        export   TERM__WHITE=`tput setaf  7`
-    fi
-fi
-
 function setupPrompt() {
-    STATUS_LINE_TEXT="$1"
+    STATUS_LINE_TEXT="${1:-off}"
     PROMPT_TEXT="$2"
+
+    # Only read commands from the terminal once since it's expensive
+    if [ -z "$TERM__RESET_ATTRIBUTES" ]; then
+        # Determine how many colors are supported
+        TERM__COLORS=`tput colors`
+        # Setup variables that contain control sequences for colors I like to use
+        export TERM__RESET_ATTRIBUTES=`tput sgr0`
+        if (( "$TERM__COLORS" > 16 )); then
+        # Support for more than 16 colors (e.g. xterm-256color, screen-256color)
+            export    TERM__BLUE=`tput setaf $((36*2 + 6*2 + 5 +16))`
+            export   TERM__GREEN=`tput setaf $((36*0 + 6*3 + 0 +16))`
+            export TERM__MAGENTA=`tput setaf $((36*3 + 6*0 + 3 +16))`
+            export     TERM__RED=`tput setaf $((36*3 + 6*0 + 0 +16))`
+            export  TERM__YELLOW=`tput setaf $((36*3 + 6*3 + 0 +16))`
+            export   TERM__WHITE=`tput setaf $((36*3 + 6*3 + 3 +16))`
+        elif [[ "$TERM__COLORS" > 8 ]]; then
+        # Support for more than 8 colors
+            export    TERM__BLUE=`tput setaf 12`
+            export   TERM__GREEN=`tput setaf  2`
+            export TERM__MAGENTA=`tput setaf  5`
+            export     TERM__RED=`tput setaf  1`
+            export  TERM__YELLOW=`tput setaf  3`
+            export   TERM__WHITE=`tput setaf  7`
+        elif [[ "$TERM__COLORS" < 2 ]]; then
+        # No support for colors
+            export    TERM__BLUE=''
+            export   TERM__GREEN=''
+            export TERM__MAGENTA=''
+            export     TERM__RED=''
+            export  TERM__YELLOW=''
+            export   TERM__WHITE=''
+        else
+        # Support for 8 colors
+            export    TERM__BLUE=`tput bold; tput setaf  4`
+            export   TERM__GREEN=`tput setaf  2`
+            export TERM__MAGENTA=`tput setaf  5`
+            export     TERM__RED=`tput setaf  1`
+            export  TERM__YELLOW=`tput setaf  3`
+            export   TERM__WHITE=`tput setaf  7`
+        fi
+
+        # Determine the status line terminal type
+        if tput hs; then
+            # Current term supports a status line, use as-is
+            STATUS_LINE_TERM="$TERM"
+        elif [[ "$TERM" =~ ^xterm.* ]]; then
+            # xterms can usually use the window title, but they sometimes need a
+            # special term type to recognize this. Test for this type and use it
+            # when available
+            infocmp 'xterm+sl' >/dev/null 2>&1 && STATUS_LINE_TERM='xterm+sl' || STATUS_LINE_TERM=
+        elif [[ "$TERM" =~ ^screen.* ]]; then
+            # screen terminals can use either the hardstatus line or the window title
+            # but they need a special term type to recognize this
+            STATUS_LINE_TERM='screen-s'
+        else
+            # other terms do not support a status line
+            STATUS_LINE_TERM=
+        fi
+
+            # Check if a STATUS_LINE_TERM was set (i.e. status line is available)
+        if [[ -n "$STATUS_LINE_TERM" ]]; then
+            # This means we want to send information to the status line at each prompt,
+            # which will make it easier/possible to find windows/sessions by name
+
+            # Check to see if we're in a screen terminal
+            if [[ "$STATUS_LINE_TERM" =~ ^screen.* ]]; then
+                # In this case we actually want to write to the screen window title
+                # rather than the status line. So use the screen-specific escapes
+                export TERM__STATUS_LINE_TO=`echo -ne '\ek'`
+                export TERM__STATUS_LINE_FROM=`echo -ne '\e\\'`'\'
+            else
+                # Use terminfo to get the escapes to start and end the status line
+                export TERM__STATUS_LINE_TO=`tput -T "$STATUS_LINE_TERM" tsl`
+                export TERM__STATUS_LINE_FROM=`tput -T "$STATUS_LINE_TERM" fsl`
+            fi
+        else
+            export TERM__STATUS_LINE_TO=
+            export TERM__STATUS_LINE_FROM=
+        fi
+    fi
 
     # Setup the prompt
     # \n[ISO 8601 short date/time] [# of jobs]
@@ -58,47 +97,11 @@ function setupPrompt() {
     # [working dir]\n$
     PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__YELLOW"'\w'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"'\n\$ '
 
-    # Check to see if the current terminal supports a status line
-    # If so, set that term type in STATUS_LINE_TERM
-    if [[ "$STATUS_LINE_TEXT" == "off" ]]; then
-        # Command line arg explicitly disables status line usage
-        STATUS_LINE_TERM=
-    elif tput hs; then
-        # Current term supports a status line, use as-is
-        STATUS_LINE_TERM="$TERM"
-    elif [[ "$TERM" =~ ^xterm.* ]]; then
-        # xterms can usually use the window title, but they sometimes need a
-        # special term type to recognize this. Test for this type and use it
-        # when available
-        infocmp 'xterm+sl' >/dev/null 2>&1 && STATUS_LINE_TERM='xterm+sl' || STATUS_LINE_TERM=
-    elif [[ "$TERM" =~ ^screen.* ]]; then
-        # screen terminals can use either the hardstatus line or the window title
-        # but they need a special term type to recognize this
-        STATUS_LINE_TERM='screen-s'
-    else
-        # other terms do not support a status line
-        STATUS_LINE_TERM=
-    fi
-
-    # Check if a STATUS_LINE_TERM was set (i.e. status line is available)
-    if [[ -n "$STATUS_LINE_TERM" ]]; then
-        # This means we want to send information to the status line at each prompt,
-        # which will make it easier/possible to find windows/sessions by name
-
-        # Check to see if we're in a screen terminal
-        if [[ "$STATUS_LINE_TERM" =~ ^screen.* ]]; then
-            # In this case we actually want to write to the screen window title
-            # rather than the status line. So use the screen-specific escapes
-            STATUS_LINE_TO=`echo -ne '\ek'`
-            STATUS_LINE_FROM=`echo -ne '\e\\'`'\'
-        else
-            # Use terminfo to get the escapes to start and end the status line
-            STATUS_LINE_TO=`tput -T "$STATUS_LINE_TERM" tsl`
-            STATUS_LINE_FROM=`tput -T "$STATUS_LINE_TERM" fsl`
-        fi
+    # Check if a status line is defined and available
+    if [[ "$STATUS_LINE_TEXT" != "off" && -n "$TERM__STATUS_LINE_FROM" ]]; then
         # Prepend the escapes and desired info to the prompt
         # bash [working dir]
-        STATUS_LINE='\['"$STATUS_LINE_TO"
+        STATUS_LINE='\['"$TERM__STATUS_LINE_TO"
         if [[ -z "$STATUS_LINE_TEXT" ]]; then
             STATUS_LINE="$STATUS_LINE"'bash [\w]'
         elif [[ "$STATUS_LINE_TEXT" =~ \\w ]]; then
@@ -106,10 +109,12 @@ function setupPrompt() {
         else
             STATUS_LINE="$STATUS_LINE""$STATUS_LINE_TEXT"' [\w]'
         fi
-        STATUS_LINE="$STATUS_LINE""$STATUS_LINE_FROM"'\]'
+        STATUS_LINE="$STATUS_LINE""$TERM__STATUS_LINE_FROM"'\]'
         PS1="$STATUS_LINE""$PS1"
 
         # Also create an escape sequence that can set the status line from the hardstatus line within screen
-        export SCREEN_TITLE="$STATUS_LINE_TO"'screen %n %t%? [%h]%?'"$STATUS_LINE_FROM"
+        export SCREEN_TITLE="$TERM__STATUS_LINE_TO"'screen %n %t%? [%h]%?'"$TERM__STATUS_LINE_FROM"
+    else
+        export SCREEN_TITLE=
     fi
 }
