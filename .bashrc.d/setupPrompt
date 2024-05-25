@@ -4,6 +4,7 @@ function setupPrompt() {
 
     # Check if tput is present to calculate values
     if command -v tput >/dev/null; then
+        # Use tput to determine terminal parametes
         # Determine how many colors are supported
         TERM__COLORS=`tput colors`
         # Setup variables that contain control sequences for colors I like to use
@@ -81,15 +82,42 @@ function setupPrompt() {
             TERM__STATUS_LINE_FROM=
         fi
     else
-        # Can't read terminal, default to no colors or status line
-        TERM__BLUE=''
-        TERM__GREEN=''
-        TERM__MAGENTA=''
-        TERM__RED=''
-        TERM__YELLOW=''
-        TERM__WHITE=''
-        TERM__STATUS_LINE_TO=''
-        TERM__STATUS_LINE_FROM=''
+        # Can't read terminal via tput
+        case "$TERM" in
+            xterm-color)
+                # Assume 8 colors
+                TERM__BLUE='\[\033[1m\[\033[34m'
+                TERM__GREEN='\[\033[32m'
+                TERM__MAGENTA='\[\033[35m'
+                TERM__RED='\[\033[31m'
+                TERM__YELLOW='\[\033[33m'
+                TERM__WHITE='\[\033[37m'
+                TERM__RESET_ATTRIBUTES='\[\033[m'
+                ;;
+            *-256color)
+                # Assume 256 color xterm
+                TERM__BLUE='\[\033[38;5;105m'
+                TERM__GREEN='\[\033[38;5;34m'
+                TERM__MAGENTA='\[\033[38;5;127m'
+                TERM__RED='\[\033[38;5;124m'
+                TERM__YELLOW='\[\033[38;5;142m'
+                TERM__WHITE='\[\033[38;5;145m'
+                TERM__RESET_ATTRIBUTES='\[\033(B\[\033[m'
+                ;;
+            *)
+                # default to no colors or status line
+                TERM__BLUE=
+                TERM__GREEN=
+                TERM__MAGENTA=
+                TERM__RED=
+                TERM__YELLOW=
+                TERM__WHITE=
+                TERM__RESET_ATTRIBUTES=
+                ;;
+        esac
+        # Assume no status line
+        TERM__STATUS_LINE_TO=
+        TERM__STATUS_LINE_FROM=
     fi
 
     # Setup the prompt
