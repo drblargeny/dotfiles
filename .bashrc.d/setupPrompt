@@ -7,39 +7,39 @@ function setupPrompt() {
         # Determine how many colors are supported
         TERM__COLORS=`tput colors`
         # Setup variables that contain control sequences for colors I like to use
-        export TERM__RESET_ATTRIBUTES=`tput sgr0`
+        TERM__RESET_ATTRIBUTES=`tput sgr0`
         if (( "$TERM__COLORS" > 16 )); then
-        # Support for more than 16 colors (e.g. xterm-256color, screen-256color)
-            export    TERM__BLUE=`tput setaf $((36*2 + 6*2 + 5 +16))`
-            export   TERM__GREEN=`tput setaf $((36*0 + 6*3 + 0 +16))`
-            export TERM__MAGENTA=`tput setaf $((36*3 + 6*0 + 3 +16))`
-            export     TERM__RED=`tput setaf $((36*3 + 6*0 + 0 +16))`
-            export  TERM__YELLOW=`tput setaf $((36*3 + 6*3 + 0 +16))`
-            export   TERM__WHITE=`tput setaf $((36*3 + 6*3 + 3 +16))`
+            # Support for more than 16 colors (e.g. xterm-256color, screen-256color)
+            TERM__BLUE=`   tput setaf $((36*2 + 6*2 + 5 +16))`
+            TERM__GREEN=`  tput setaf $((36*0 + 6*3 + 0 +16))`
+            TERM__MAGENTA=`tput setaf $((36*3 + 6*0 + 3 +16))`
+            TERM__RED=`    tput setaf $((36*3 + 6*0 + 0 +16))`
+            TERM__YELLOW=` tput setaf $((36*3 + 6*3 + 0 +16))`
+            TERM__WHITE=`  tput setaf $((36*3 + 6*3 + 3 +16))`
         elif [[ "$TERM__COLORS" > 8 ]]; then
-        # Support for more than 8 colors
-            export    TERM__BLUE=`tput setaf 12`
-            export   TERM__GREEN=`tput setaf  2`
-            export TERM__MAGENTA=`tput setaf  5`
-            export     TERM__RED=`tput setaf  1`
-            export  TERM__YELLOW=`tput setaf  3`
-            export   TERM__WHITE=`tput setaf  7`
+            # Support for more than 8 colors
+            TERM__BLUE=`   tput setaf 12`
+            TERM__GREEN=`  tput setaf  2`
+            TERM__MAGENTA=`tput setaf  5`
+            TERM__RED=`    tput setaf  1`
+            TERM__YELLOW=` tput setaf  3`
+            TERM__WHITE=`  tput setaf  7`
         elif [[ "$TERM__COLORS" < 2 ]]; then
-        # No support for colors
-            export    TERM__BLUE=''
-            export   TERM__GREEN=''
-            export TERM__MAGENTA=''
-            export     TERM__RED=''
-            export  TERM__YELLOW=''
-            export   TERM__WHITE=''
+            # No support for colors
+            TERM__BLUE=''
+            TERM__GREEN=''
+            TERM__MAGENTA=''
+            TERM__RED=''
+            TERM__YELLOW=''
+            TERM__WHITE=''
         else
-        # Support for 8 colors
-            export    TERM__BLUE=`tput bold; tput setaf  4`
-            export   TERM__GREEN=`tput setaf  2`
-            export TERM__MAGENTA=`tput setaf  5`
-            export     TERM__RED=`tput setaf  1`
-            export  TERM__YELLOW=`tput setaf  3`
-            export   TERM__WHITE=`tput setaf  7`
+            # Support for 8 colors
+            TERM__BLUE=`   tput bold; tput setaf  4`
+            TERM__GREEN=`  tput setaf  2`
+            TERM__MAGENTA=`tput setaf  5`
+            TERM__RED=`    tput setaf  1`
+            TERM__YELLOW=` tput setaf  3`
+            TERM__WHITE=`  tput setaf  7`
         fi
 
         # Determine the status line terminal type
@@ -69,27 +69,27 @@ function setupPrompt() {
             if [[ "$STATUS_LINE_TERM" =~ ^screen.* ]]; then
                 # In this case we actually want to write to the screen window title
                 # rather than the status line. So use the screen-specific escapes
-                export TERM__STATUS_LINE_TO=`echo -ne '\ek'`
-                export TERM__STATUS_LINE_FROM=`echo -ne '\e\\'`'\'
+                TERM__STATUS_LINE_TO=`echo -ne '\ek'`
+                TERM__STATUS_LINE_FROM=`echo -ne '\e\\'`'\'
             else
                 # Use terminfo to get the escapes to start and end the status line
-                export TERM__STATUS_LINE_TO=`tput -T "$STATUS_LINE_TERM" tsl`
-                export TERM__STATUS_LINE_FROM=`tput -T "$STATUS_LINE_TERM" fsl`
+                TERM__STATUS_LINE_TO=`tput -T "$STATUS_LINE_TERM" tsl`
+                TERM__STATUS_LINE_FROM=`tput -T "$STATUS_LINE_TERM" fsl`
             fi
         else
-            export TERM__STATUS_LINE_TO=
-            export TERM__STATUS_LINE_FROM=
+            TERM__STATUS_LINE_TO=
+            TERM__STATUS_LINE_FROM=
         fi
     else
         # Can't read terminal, default to no colors or status line
-        export    TERM__BLUE=''
-        export   TERM__GREEN=''
-        export TERM__MAGENTA=''
-        export     TERM__RED=''
-        export  TERM__YELLOW=''
-        export   TERM__WHITE=''
-        export TERM__STATUS_LINE_TO=''
-        export TERM__STATUS_LINE_FROM=''
+        TERM__BLUE=''
+        TERM__GREEN=''
+        TERM__MAGENTA=''
+        TERM__RED=''
+        TERM__YELLOW=''
+        TERM__WHITE=''
+        TERM__STATUS_LINE_TO=''
+        TERM__STATUS_LINE_FROM=''
     fi
 
     # Setup the prompt
@@ -127,4 +127,7 @@ function setupPrompt() {
     else
         export SCREEN_TITLE=
     fi
+
+    # Clean up variables so they don't polute the environment
+    unset PROMPT_TEXT STATUS_LINE_TERM STATUS_LINE_TEXT TERM__BLUE TERM__COLORS TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW
 }
