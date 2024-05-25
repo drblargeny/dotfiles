@@ -259,7 +259,7 @@ fi
 # Define function for setting the prompt and status line
 . ~/.bashrc.d/setupPrompt
 # Setup default prompt
-setupPrompt '' "$debian_chroot"
+time setupPrompt '' "$debian_chroot"
 
 # Override the default color scheme for ls
 #Original
