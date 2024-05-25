@@ -46,6 +46,7 @@
 /.dia
 /.dotfiles
 /.dotfiles-overlay
+/.dotnet
 /.gem
 /.gimp-2.8
 /.git-for-windows-updater
