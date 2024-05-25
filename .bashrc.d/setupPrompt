@@ -2,8 +2,8 @@ function setupPrompt() {
     STATUS_LINE_TEXT="${1:-off}"
     PROMPT_TEXT="$2"
 
-    # Only read commands from the terminal once since it's expensive
-    if [ -z "$TERM__RESET_ATTRIBUTES" ]; then
+    # Check if tput is present to calculate values
+    if command -v tput >/dev/null; then
         # Determine how many colors are supported
         TERM__COLORS=`tput colors`
         # Setup variables that contain control sequences for colors I like to use
@@ -80,6 +80,16 @@ function setupPrompt() {
             export TERM__STATUS_LINE_TO=
             export TERM__STATUS_LINE_FROM=
         fi
+    else
+        # Can't read terminal, default to no colors or status line
+        export    TERM__BLUE=''
+        export   TERM__GREEN=''
+        export TERM__MAGENTA=''
+        export     TERM__RED=''
+        export  TERM__YELLOW=''
+        export   TERM__WHITE=''
+        export TERM__STATUS_LINE_TO=''
+        export TERM__STATUS_LINE_FROM=''
     fi
 
     # Setup the prompt
