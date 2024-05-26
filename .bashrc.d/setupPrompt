@@ -122,11 +122,13 @@ function setupPrompt() {
 
     # Setup the prompt
     # \n[ISO 8601 short date/time] [# of jobs]
-    PS1='\n'"$TERM__RESET_ATTRIBUTES""$TERM__BLUE"'\D{%Y%m%dT%H%M} '"$TERM__RESET_ATTRIBUTES""$TERM__RED"'\j '
+    PS1='\n'"$TERM__RESET_ATTRIBUTES""$TERM__BLUE"'\D{%Y-%m-%dT%H:%M:%S} '"$TERM__RESET_ATTRIBUTES""$TERM__RED"'\j '
+
     # Include any additional information from arg 2
     if [[ -n "$PROMPT_TEXT" ]]; then
         PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__MAGENTA""$PROMPT_TEXT"' '
     fi
+
     # Only include user info if running from within screen or ssh
     if [[ "$TERM" =~ ^screen.* ]] || [[ -n "$SSH_CLIENT" ]] || [[ -n $SSH_TTY ]]; then
         # [user]@[host]:
