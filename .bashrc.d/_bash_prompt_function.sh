@@ -1,4 +1,7 @@
 # Bash function for setting up a resonable terminal prompt
+# Sets PS1 for normal prompt
+# Sets SCREEN_TITLE for screen's title/status line
+# Sets TERM__COLORS with number of colors supported by terminal
 function _bash_prompt_function() {
     STATUS_LINE_TEXT="${1:-off}"
     PROMPT_TEXT="$2"
@@ -88,6 +91,7 @@ function _bash_prompt_function() {
         case "$TERM" in
             xterm-color)
                 # Assume 8 colors
+                TERM__COLORS=8
                 TERM__BLUE='\[\033[1m\[\033[34m'
                 TERM__GREEN='\[\033[32m'
                 TERM__MAGENTA='\[\033[35m'
@@ -98,6 +102,7 @@ function _bash_prompt_function() {
                 ;;
             *-256color)
                 # Assume 256 color xterm
+                TERM__COLORS=256
                 TERM__BLUE='\[\033[38;5;105m'
                 TERM__GREEN='\[\033[38;5;34m'
                 TERM__MAGENTA='\[\033[38;5;127m'
@@ -108,6 +113,7 @@ function _bash_prompt_function() {
                 ;;
             *)
                 # default to no colors or status line
+                TERM__COLORS=0
                 TERM__BLUE=
                 TERM__GREEN=
                 TERM__MAGENTA=
@@ -161,5 +167,5 @@ function _bash_prompt_function() {
     fi
 
     # Clean up variables so they don't polute the environment
-    unset PROMPT_TEXT STATUS_LINE_TERM STATUS_LINE_TEXT TERM__BLUE TERM__COLORS TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW
+    unset PROMPT_TEXT STATUS_LINE_TERM STATUS_LINE_TEXT TERM__BLUE TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW
 }
