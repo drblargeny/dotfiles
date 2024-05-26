@@ -1,3 +1,4 @@
+# Bash function for setting up a resonable terminal prompt
 function _bash_prompt_function() {
     STATUS_LINE_TEXT="${1:-off}"
     PROMPT_TEXT="$2"
@@ -83,6 +84,7 @@ function _bash_prompt_function() {
         fi
     else
         # Can't read terminal via tput
+        # Guess colors based on TERM type
         case "$TERM" in
             xterm-color)
                 # Assume 8 colors
