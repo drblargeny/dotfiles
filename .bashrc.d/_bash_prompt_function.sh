@@ -1,4 +1,4 @@
-function setupPrompt() {
+function _bash_prompt_function() {
     STATUS_LINE_TEXT="${1:-off}"
     PROMPT_TEXT="$2"
 

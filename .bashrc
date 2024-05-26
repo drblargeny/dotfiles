@@ -257,9 +257,9 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # Define function for setting the prompt and status line
-. ~/.bashrc.d/setupPrompt
+. ~/.bashrc.d/_bash_prompt_function.sh
 # Setup default prompt
-setupPrompt '' "$debian_chroot"
+_bash_prompt_function '' "$debian_chroot"
 
 # Override the default color scheme for ls
 #Original
