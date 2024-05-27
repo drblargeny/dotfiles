@@ -15,7 +15,9 @@ function _bash_prompt_function() {
         TERM__RESET_ATTRIBUTES=`tput sgr0`
         if (( "$TERM__COLORS" > 16 )); then
             # Support for more than 16 colors (e.g. xterm-256color, screen-256color)
+            TERM__BLACK=`  tput setaf $((36*0 + 6*0 + 0 +16))`
             TERM__BLUE=`   tput setaf $((36*2 + 6*2 + 5 +16))`
+            TERM__CYAN=`   tput setaf $((36*3 + 6*3 + 5 +16))`
             TERM__GREEN=`  tput setaf $((36*0 + 6*3 + 0 +16))`
             TERM__MAGENTA=`tput setaf $((36*3 + 6*0 + 3 +16))`
             TERM__RED=`    tput setaf $((36*3 + 6*0 + 0 +16))`
@@ -23,7 +25,9 @@ function _bash_prompt_function() {
             TERM__WHITE=`  tput setaf $((36*3 + 6*3 + 3 +16))`
         elif [[ "$TERM__COLORS" > 8 ]]; then
             # Support for more than 8 colors
+            TERM__BLACK=`  tput setaf  0`
             TERM__BLUE=`   tput setaf 12`
+            TERM__CYAN=`   tput setaf  6`
             TERM__GREEN=`  tput setaf  2`
             TERM__MAGENTA=`tput setaf  5`
             TERM__RED=`    tput setaf  1`
@@ -31,15 +35,19 @@ function _bash_prompt_function() {
             TERM__WHITE=`  tput setaf  7`
         elif [[ "$TERM__COLORS" < 2 ]]; then
             # No support for colors
-            TERM__BLUE=''
-            TERM__GREEN=''
-            TERM__MAGENTA=''
-            TERM__RED=''
-            TERM__YELLOW=''
-            TERM__WHITE=''
+            TERM__BLACK=
+            TERM__BLUE=
+            TERM__CYAN=
+            TERM__GREEN=
+            TERM__MAGENTA=
+            TERM__RED=
+            TERM__YELLOW=
+            TERM__WHITE=
         else
             # Support for 8 colors
+            TERM__BLACK=`  tput setaf  0`
             TERM__BLUE=`   tput bold; tput setaf  4`
+            TERM__CYAN=`   tput setaf  6`
             TERM__GREEN=`  tput setaf  2`
             TERM__MAGENTA=`tput setaf  5`
             TERM__RED=`    tput setaf  1`
@@ -92,7 +100,9 @@ function _bash_prompt_function() {
             xterm-color)
                 # Assume 8 colors
                 TERM__COLORS=8
+                TERM__BLACK='\[\033[30m'
                 TERM__BLUE='\[\033[1m\[\033[34m'
+                TERM__CYAN='\[\033[36m'
                 TERM__GREEN='\[\033[32m'
                 TERM__MAGENTA='\[\033[35m'
                 TERM__RED='\[\033[31m'
@@ -103,7 +113,9 @@ function _bash_prompt_function() {
             *-256color)
                 # Assume 256 color xterm
                 TERM__COLORS=256
+                TERM__BLACK='\[\033[38;5;16m'
                 TERM__BLUE='\[\033[38;5;105m'
+                TERM__CYAN='\[\033[38;5;147m'
                 TERM__GREEN='\[\033[38;5;34m'
                 TERM__MAGENTA='\[\033[38;5;127m'
                 TERM__RED='\[\033[38;5;124m'
@@ -114,7 +126,9 @@ function _bash_prompt_function() {
             *)
                 # default to no colors or status line
                 TERM__COLORS=0
+                TERM__BLACK=
                 TERM__BLUE=
+                TERM__CYAN=
                 TERM__GREEN=
                 TERM__MAGENTA=
                 TERM__RED=
@@ -167,5 +181,5 @@ function _bash_prompt_function() {
     fi
 
     # Clean up variables so they don't polute the environment
-    unset PROMPT_TEXT STATUS_LINE_TERM STATUS_LINE_TEXT TERM__BLUE TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW
+    unset PROMPT_TEXT STATUS_LINE_TERM STATUS_LINE_TEXT TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW
 }
