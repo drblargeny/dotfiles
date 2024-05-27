@@ -270,6 +270,9 @@ if command -v dircolors >/dev/null; then
     test -r "$DIR_COLORS" && eval "$(dircolors -b $DIR_COLORS)" || eval "$(dircolors -b)"
 fi
 
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 # settings for less
 #
 # NOTE: If these defaults need to be ignored/changed for a particular less
