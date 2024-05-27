@@ -262,8 +262,12 @@ fi
 _bash_prompt_function '' "${debian_chroot:+($debian_chroot)}"
 
 # enable color support of ls and also add handy aliases
+for DIR_COLORS in ~/.dircolors.d/{256,16,8}/.dircolors; do
+    [[ -r "$DIR_COLORS" && ( $TERM__COLORS = $colors || $TERM__COLORS > $colors ) ]] && break
+done
+#echo "$DIR_COLORS"
 if command -v dircolors >/dev/null; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    test -r "$DIR_COLORS" && eval "$(dircolors -b $DIR_COLORS)" || eval "$(dircolors -b)"
 fi
 
 # settings for less
