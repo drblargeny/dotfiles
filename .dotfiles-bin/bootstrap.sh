@@ -85,7 +85,7 @@ dotfiles status --short | sed -E '/^ ?D/!d;s/^ ?D +//' | while read f; do
 done
 
 echo Source this to enable the $CONFIG_COMMAND command to manage changes
-echo . ~/.dotfiles-bin/config-alias.sh
+echo source ~/.dotfiles-bin/config-alias.sh
 echo 
 echo Then review the current differences
 echo $CONFIG_COMMAND status

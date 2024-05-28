@@ -42,21 +42,39 @@ alias/command is available for maintaining the "overlay" repository.
 
 1. Download and run [.dotfiles-bin/bootstrap.sh](.dotfiles-bin/bootstrap.sh)
 
-    * HTTPS
+    1. Download script
 
         ```shell
-        bootstrap.sh 'https://github.com/drblargeny/dotfiles.git'
+        curl -O 'https://raw.githubusercontent.com/drblargeny/dotfiles/main/.dotfiles-bin/bootstrap.sh'
         ```
 
-    * SSH
+    2. Make executable
 
         ```shell
-        bootstrap.sh 'git@github.com:drblargeny/dotfiles.git'
+        chmod +x bootstrap.sh
         ```
+
+    3. Run to sync clone/sync files
+
+        * Use HTTPS for remote Git repo
+
+            ```shell
+            ./bootstrap.sh 'https://github.com/drblargeny/dotfiles.git'
+            ```
+
+        * Use SSH for remote Git repo
+
+            ```shell
+            ./bootstrap.sh 'git@github.com:drblargeny/dotfiles.git'
+            ```
 
 1. Source the `~/.dotfiles-bin/config-alias.sh` file to enable the `config`
     alias/command, which replaces the `git` command when making versioned
     changes to the dotfiles in your `HOME` directory.
+
+    ```shell
+    source ~/.dotfiles-bin/config-alias.sh
+    ```
 
 1. Reconcile any differences between your existing files and the files from
     this project.
@@ -88,13 +106,21 @@ alias/command is available for maintaining the "overlay" repository.
         any changes.  This profile expects that you set these environment
         variables for the Git author/committer details to avoid putting them
         in the [.gitconfig](.gitconfig) file.  You can use the
-        `~/.bashrc.d/host.$HOSTNAME` file to load custom settings for this
+        `~/.bashrc.d/host.HOST` file to export custom settings for this
         host.
+
+        ```shell
+        vim ~/.bashrc.d/host.`hostname`
+        ```
 
         * [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)
         * [`GIT_AUTHOR_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHORNAMEcode)
         * [`GIT_COMMITTER_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTEREMAILcode)
         * [`GIT_COMMITTER_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTERNAMEcode)
+
+        ```shell
+        source ~/.bashrc.d/host.`hostname`
+        ```
 
     ```shell
     config commit
