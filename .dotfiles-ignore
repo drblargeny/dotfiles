@@ -39,11 +39,53 @@
 *.stackdump
 /.bash_history
 /.cache
+/.config/autostart/
+/.config/baloofilerc
+/.config/bluedevilglobalrc
 /.config/configstore/
+/.config/dconf/
+/.config/dolphinrc
+/.config/falkon/
 /.config/gtk-2.0
+/.config/gtk-3.0/
+/.config/gtk-4.0/
+/.config/gtkrc
+/.config/gtkrc-2.0
 /.config/jgit/
+/.config/kactivitymanagerd-statsrc
+/.config/kactivitymanagerdrc
+/.config/katerc
+/.config/katevirc
+/.config/kconf_updaterc
+/.config/kde.org/
+/.config/KDE/
+/.config/kdeconnect/
+/.config/kded5rc
+/.config/kdedefaults/
+/.config/kdeglobals
+/.config/kglobalshortcutsrc
+/.config/knfsshare
+/.config/konsolerc
+/.config/konsolesshconfig
+/.config/ktimezonedrc
+/.config/kwinoutputconfig.json
+/.config/kwinrc
+/.config/libaccounts-glib/
+/.config/manjaro-hello.json
+/.config/plasma-localerc
+/.config/plasma-org.kde.plasma.desktop-appletsrc
+/.config/plasmashellrc
+/.config/powermanagementprofilesrc
+/.config/pulse/
+/.config/session/
+/.config/systemsettingsrc
+/.config/Trolltech.conf
+/.config/user-dirs.dirs
+/.config/user-dirs.locale
+/.config/xsettingsd/
 /.cpan
 /.dia
+/.dir_colors
 /.dotfiles
 /.dotfiles-overlay
 /.dotnet
@@ -53,10 +95,14 @@
 /.gitignore
 /.gnupg
 /.gtk-bookmarks
+/.gtkrc-2.0
 /.hushlogin
 /.idlerc
 /.lesshst
+/.local/
 /.motd_shown
+/.mozilla
+/.nanorc
 /.parallel
 /.python-gitlab.cfg
 /.python_history
@@ -71,14 +117,11 @@
 /.viminfo
 /.vscode-server
 /.wget-hsts
+/.Xclients
+/.xinitrc
+/.zcompdump
+/.zhistory
 /.zshrc
-/Documents
-/Downloads
-/OneDrive - rpmpcg.onmicrosoft.com
-/Oracle Exports
-/Oracle/oracle.oracledevtools
-/Oracle/oradiag_boltonj
-/RPM Performance Coatings
 /bin/eview
 /bin/evim
 /bin/gex
@@ -94,8 +137,16 @@
 /bin/vimx
 /csvkit
 /deploy
+/Desktop
+/Documents
+/Downloads
 /jlog
+/OneDrive - rpmpcg.onmicrosoft.com
+/Oracle Exports
+/Oracle/oracle.oracledevtools
+/Oracle/oradiag_boltonj
 /perl5
+/RPM Performance Coatings
 /rpmpcg.onmicrosoft.com
 /screen-exchange
 /test-attachments
@@ -104,3 +155,4 @@
 /vimfiles/spell/*.spl
 /vimtemp
 /workspaces
+

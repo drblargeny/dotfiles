@@ -43,6 +43,7 @@ export HOME="${HOME%/}"
 # shopt -s nocaseglob
 #
 # Make bash append rather than overwrite the history on disk
+# Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 #
 # When changing directory small typos can be ignored by bash
@@ -113,6 +114,28 @@ export HISTTIMEFORMAT="%F %T "
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# Define function for setting the prompt and status line
+. ~/.bashrc.d/_bash_prompt_function.sh
+# Setup default prompt
+_bash_prompt_function '' "${debian_chroot:+($debian_chroot)}"
+
+# enable color support of ls and also add handy aliases
+for DIR_COLORS in ~/.dircolors.d/{256,16,8}/.dircolors; do
+    [[ -r "$DIR_COLORS" && ( $TERM__COLORS = $colors || $TERM__COLORS > $colors ) ]] && break
+done
+#echo "$DIR_COLORS"
+if command -v dircolors >/dev/null; then
+    test -r "$DIR_COLORS" && eval "$(dircolors -b $DIR_COLORS)" || eval "$(dircolors -b)"
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 # Aliases
 #
 # Some people use a different file for aliases
@@ -127,35 +150,41 @@ HISTFILESIZE=2000
 # \rm will call the real rm not the alias.
 #
 # Interactive operation...
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
+alias rm='rm -i'                          # confirm before deleting something
+alias cp='cp -i'                          # confirm before overwriting something
+alias mv='mv -i'                          # confirm before moving something
 # Rather than ask after removing each file, only ask if there are more than 3 files
 #alias rm='rm -I'
-#
+
 # Default to human readable figures
-# alias df='df -h'
-# alias du='du -h'
-#
+alias df='df -h'
+alias du='du -h'
+alias free='free -m'                      # show sizes in MB
+
 # Misc :)
-# alias less='less -r'                          # raw control characters
-# alias whence='type -a'                        # where, of a sort
-alias grep='grep --color=auto'                # show differences in colour
-alias egrep='egrep --color=auto'              # show differences in colour
-alias fgrep='fgrep --color=auto'              # show differences in colour
+#alias less='less -r'                          # raw control characters
+#alias more=less
+#alias np='nano -w PKGBUILD'
+#alias whence='type -a'                        # where, of a sort
+[[ "$TERM__COLORS" > 0 ]] && color_auto='--color=auto' || color_auto=
+alias grep="grep $color_auto"                # show differences in colour
+alias egrep="egrep $color_auto"              # show differences in colour
+alias fgrep="fgrep $color_auto"              # show differences in colour
 #
 # Some shortcuts for different directory listings
 # alias ls='ls -hF --color=tty'                 # classify files in colour
 # alias ls='ls -hp --color=auto'                # add slash indicators to directories in colour
-alias ls='ls -hp --color=auto --quoting-style=escape'   # add slash indicators to directories in colour and escape with slashes
-alias dir='ls --color=auto --format=vertical'
-alias vdir='ls --color=auto --format=long'
+alias ls="ls -hp $color_auto --quoting-style=escape"   # add slash indicators to directories in colour and escape with slashes
+alias dir="ls $color_auto --format=vertical"
+alias vdir="ls $color_auto --format=long"
 alias ll='ls -l --quoting-style=escape'      # long list
 alias la='ls -A'                              # all but . and ..
 # alias l='ls -CF'                              #
 
 # rsync display options
 alias rsync='rsync -z --progress'
+
+unset color_auto
 
 # Umask
 #
@@ -242,36 +271,21 @@ alias rsync='rsync -z --progress'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
+# Bash won't get SIGWINCH if another process is in the foreground.
+# Enable checkwinsize so that bash will check the terminal size when
+# it regains control.  #65623
+# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
 shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
+shopt -s expand_aliases
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# Define function for setting the prompt and status line
-. ~/.bashrc.d/_bash_prompt_function.sh
-# Setup default prompt
-_bash_prompt_function '' "${debian_chroot:+($debian_chroot)}"
-
-# enable color support of ls and also add handy aliases
-for DIR_COLORS in ~/.dircolors.d/{256,16,8}/.dircolors; do
-    [[ -r "$DIR_COLORS" && ( $TERM__COLORS = $colors || $TERM__COLORS > $colors ) ]] && break
-done
-#echo "$DIR_COLORS"
-if command -v dircolors >/dev/null; then
-    test -r "$DIR_COLORS" && eval "$(dircolors -b $DIR_COLORS)" || eval "$(dircolors -b)"
-fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # settings for less
 #
@@ -326,6 +340,8 @@ if [ -d "$HOME/.local/bin" ] ; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
+# export QT_SELECT=4
+
 # Setup vimasaur (vim as our) editor
 export SVN_EDITOR=vim
 export EDITOR=vim
@@ -352,7 +368,7 @@ fi
 # sources /etc/bash.bashrc).
 if [ -z "$BASH_COMPLETION_VERSINFO" ]; then
   if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
+    if [ -r /usr/share/bash-completion/bash_completion ]; then
       . /usr/share/bash-completion/bash_completion
     elif [ -f /etc/bash_completion ]; then
       . /etc/bash_completion
