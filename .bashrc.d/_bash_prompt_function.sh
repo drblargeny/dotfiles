@@ -182,6 +182,19 @@ function _bash_prompt_function() {
         export SCREEN_TITLE=
     fi
 
+    # Change the window title of X terminals
+    case ${TERM} in
+        xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
+            PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+            ;;
+        screen*)
+            PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+            ;;
+        *)
+            unset PROMPT_COMMAND
+            ;;
+    esac
+
     # Clean up variables so they don't polute the environment
     unset PROMPT_TEXT STATUS_LINE_TERM STATUS_LINE_TEXT TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW
 }
