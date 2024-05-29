@@ -114,14 +114,23 @@ export HISTTIMEFORMAT="%F %T "
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# Functions
+#
+# Auto-load functions from ~/.bashrc.d/functions/
+for func_file in ~/.bashrc.d/functions/*; do
+    source "$func_file"
+done
+# Some people use a different file for functions
+if [ -f "${HOME}/.bash_functions" ]; then
+  source "${HOME}/.bash_functions"
+fi
+
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# Define function for setting the prompt and status line
-. ~/.bashrc.d/_bash_prompt_function.sh
-# Setup default prompt
+# Setup default prompt and status line
 _bash_prompt_function '' "${debian_chroot:+($debian_chroot)}"
 
 if command -v dircolors >/dev/null; then
@@ -199,81 +208,6 @@ unset color_auto
 # umask 027
 # Paranoid: neither group nor others have any perms:
 # umask 077
-
-# Functions
-#
-# Some people use a different file for functions
-# if [ -f "${HOME}/.bash_functions" ]; then
-#   source "${HOME}/.bash_functions"
-# fi
-#
-# Some example functions:
-#
-# a) function settitle
-# settitle ()
-# {
-#   echo -ne "\e]2;$@\a\e]1;$@\a";
-# }
-#
-# b) function cd_func
-# This function defines a 'cd' replacement function capable of keeping,
-# displaying and accessing history of visited directories, up to 10 entries.
-# To use it, uncomment it, source this file and try 'cd --'.
-# acd_func 1.0.5, 10-nov-2004
-# Petar Marinov, http:/geocities.com/h2428, this is public domain
-# cd_func ()
-# {
-#   local x2 the_new_dir adir index
-#   local -i cnt
-#
-#   if [[ $1 ==  "--" ]]; then
-#     dirs -v
-#     return 0
-#   fi
-#
-#   the_new_dir=$1
-#   [[ -z $1 ]] && the_new_dir=$HOME
-#
-#   if [[ ${the_new_dir:0:1} == '-' ]]; then
-#     #
-#     # Extract dir N from dirs
-#     index=${the_new_dir:1}
-#     [[ -z $index ]] && index=1
-#     adir=$(dirs +$index)
-#     [[ -z $adir ]] && return 1
-#     the_new_dir=$adir
-#   fi
-#
-#   #
-#   # '~' has to be substituted by ${HOME}
-#   [[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
-#
-#   #
-#   # Now change to the new dir and add to the top of the stack
-#   pushd "${the_new_dir}" > /dev/null
-#   [[ $? -ne 0 ]] && return 1
-#   the_new_dir=$(pwd)
-#
-#   #
-#   # Trim down everything beyond 11th entry
-#   popd -n +11 2>/dev/null 1>/dev/null
-#
-#   #
-#   # Remove any other occurence of this dir, skipping the top of the stack
-#   for ((cnt=1; cnt <= 10; cnt++)); do
-#     x2=$(dirs +${cnt} 2>/dev/null)
-#     [[ $? -ne 0 ]] && return 0
-#     [[ ${x2:0:1} == '~' ]] && x2="${HOME}${x2:1}"
-#     if [[ "${x2}" == "${the_new_dir}" ]]; then
-#       popd -n +$cnt 2>/dev/null 1>/dev/null
-#       cnt=cnt-1
-#     fi
-#   done
-#
-#   return 0
-# }
-#
-# alias cd=cd_func
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
