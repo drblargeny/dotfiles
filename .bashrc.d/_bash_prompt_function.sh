@@ -151,9 +151,11 @@ function _bash_prompt_function() {
         PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__MAGENTA""$PROMPT_TEXT"' '
     fi
 
-    # Only include user info if running from within screen or ssh
-    if [[ "$TERM" =~ ^screen.* ]] || [[ -n "$SSH_CLIENT" ]] || [[ -n $SSH_TTY ]]; then
-        # [user]@[host]:
+    # Use different colors when running and the root user
+    # [user]@[host]:
+    if [[ ${EUID} == 0 ]]; then
+        PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__RED"'\u@\h'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"':'
+    else
         PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__GREEN"'\u@\h'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"':'
     fi
     # [working dir]\n$
