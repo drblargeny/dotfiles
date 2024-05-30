@@ -71,9 +71,6 @@ if [[ ! -d "$GIT_DIR" ]]; then
   if [ -f /usr/bin/cygpath ] ; then
     dotfiles config --local core.filemode false
   fi
-
-  # Set upstream for push
-  dotfiles branch "$GIT_BRANCH" -u origin/"$GIT_BRANCH"
 fi
 
 # Then restore the files in place and do a merge when there are conflicts
@@ -83,6 +80,9 @@ dotfiles reset
 dotfiles status --short | sed -E '/^ ?D/!d;s/^ ?D +//' | while read f; do
   dotfiles restore "$f"
 done
+
+# 3. Set upstream for push
+dotfiles branch "$GIT_BRANCH" -u origin/"$GIT_BRANCH"
 
 echo Source this to enable the $CONFIG_COMMAND command to manage changes
 echo source ~/.dotfiles-bin/config-alias.sh
