@@ -7,7 +7,9 @@
 
 # base-files version 4.3-3
 
-# ~/.bashrc: executed by bash(1) for interactive shells.
+# ~/.bashrc: executed by bash(1) for interactive non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
 
 # The latest version as installed by the Cygwin Setup program can
 # always be found at /etc/defaults/etc/skel/.bashrc
@@ -41,10 +43,6 @@ export HOME="${HOME%/}"
 #
 # Use case-insensitive filename globbing
 # shopt -s nocaseglob
-#
-# Make bash append rather than overwrite the history on disk
-# Enable history appending instead of overwriting.  #139609
-shopt -s histappend
 #
 # When changing directory small typos can be ignored by bash
 # for example, cd /vr/lgo/apaache would find /var/log/apache
@@ -92,12 +90,13 @@ shopt -s no_empty_cmd_completion
 
 # History Options
 #
-# Don't put duplicate lines in the history.
-# export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
-#
-# Don't put duplicate lines in the history and ignore lines that begin with space
-export HISTCONTROL=ignoreboth
-#
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
 # Ignore some controlling instructions
 # HISTIGNORE is a colon-delimited list of patterns which should be excluded.
 # The '&' is a special pattern which suppresses duplicate entries.
@@ -106,7 +105,7 @@ export HISTCONTROL=ignoreboth
 #
 # Whenever displaying the prompt, write the previous line to disk
 # export PROMPT_COMMAND="history -a"
-#
+
 # Add timestamp to history lines
 export HISTTIMEFORMAT="%F %T "
 
@@ -133,8 +132,8 @@ fi
 # Setup default prompt and status line
 _bash_prompt_function '' "${debian_chroot:+($debian_chroot)}"
 
+# enable color support of ls and also add handy aliases
 if command -v dircolors >/dev/null; then
-    # enable color support of ls and also add handy aliases
     for DIR_COLORS in ~/.dircolors.d/{256,16,8}/.dircolors; do
         [[ -r "$DIR_COLORS" && ( $TERM__COLORS = $colors || $TERM__COLORS > $colors ) ]] && break
         unset DIR_COLORS
@@ -151,13 +150,17 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Aliases
+# Alias definitions.
 #
 # Some people use a different file for aliases
-# if [ -f "${HOME}/.bash_aliases" ]; then
-#   source "${HOME}/.bash_aliases"
-# fi
-#
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
 # Some example alias instructions
 # If these are enabled they will be used instead of any instructions
 # they may mask.  For example, alias rm='rm -i' will mask the rm
@@ -185,21 +188,35 @@ alias free='free -m'                      # show sizes in MB
 alias grep="grep $color_auto"                # show differences in colour
 alias egrep="egrep $color_auto"              # show differences in colour
 alias fgrep="fgrep $color_auto"              # show differences in colour
-#
+
 # Some shortcuts for different directory listings
-# alias ls='ls -hF --color=tty'                 # classify files in colour
-# alias ls='ls -hp --color=auto'                # add slash indicators to directories in colour
 alias ls="ls -hp $color_auto --quoting-style=escape"   # add slash indicators to directories in colour and escape with slashes
-alias dir="ls $color_auto --format=vertical"
-alias vdir="ls $color_auto --format=long"
-alias ll='ls -l --quoting-style=escape'      # long list
-alias la='ls -A'                              # all but . and ..
-# alias l='ls -CF'                              #
+if command -v dir >/dev/null; then
+  alias dir="dir $color_auto"
+else
+  alias dir="ls $color_auto --format=vertical"
+fi
+if command -v vdir >/dev/null; then
+  alias vdir="vdir $color_auto"
+else
+  alias vdir="ls $color_auto --format=long"
+fi
+# some more ls aliases
+alias ll="ls $color_auto -l --quoting-style=escape"      # long list
+alias la="ls $color_auto -A"                              # all but . and ..
+alias l="ls $color_auto -CF"
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # rsync display options
 alias rsync='rsync -z --progress'
 
 unset color_auto
+
+# Load Python aliases if python command exists
+[ -n "$(command -v python)" ] && . ~/.bashrc.d/python-aliases
 
 # Umask
 #
@@ -224,7 +241,7 @@ shopt -s checkwinsize
 shopt -s expand_aliases
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 
 # settings for less
@@ -296,9 +313,6 @@ fi
 if [ -f ~/.bashrc.d/.ssh-agent-autostart-enabled ]; then
     . ~/.bashrc.d/ssh-agent
 fi
-
-# Load Python aliases if python command exists
-[ -n "$(command -v python)" ] && . ~/.bashrc.d/python-aliases
 
 # Source the alias to provide Git versioning of dotfiles
 . ~/.dotfiles-bin/config-alias.sh

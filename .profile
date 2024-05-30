@@ -31,15 +31,15 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# Set user-defined locale
-export LANG=$(locale -uU)
+# Set Windows user-defined locale for Cygwin
+if [ -x /usr/bin/cygpath ]; then
+  export LANG=$(locale -uU)
+fi
 
 # if running bash
-if [ -n "${BASH_VERSION}" ]; then
+if [ -n "$BASH_VERSION" && -f "$HOME/.bashrc" ]; then
   # include .bashrc if it exists
-  if [ -f "${HOME}/.bashrc" ]; then
-    source "${HOME}/.bashrc"
-  fi
+  . "$HOME/.bashrc"
 else
   # set PATH so it includes user's private bin if it exists
   if [ -d "$HOME/bin" ] ; then
@@ -51,3 +51,4 @@ else
       PATH="$HOME/.local/bin:$PATH"
   fi
 fi
+
