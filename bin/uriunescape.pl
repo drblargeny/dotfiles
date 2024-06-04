@@ -1,4 +1,4 @@
-#!perl -n
+#!/usr/bin/perl -n
 ##############################
 # Un-escapes URI encoded lines
 ##############################
