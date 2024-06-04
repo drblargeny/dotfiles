@@ -1,3 +1,4 @@
+#!/bin/bash
 # Add keys to the ssh-agent per standards and my conventions
 
 # Add standard keys
