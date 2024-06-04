@@ -1,7 +1,11 @@
 #!/bin/bash
 # Add keys to the ssh-agent per standards and my conventions
 
-# Add standard keys
-ssh-add &&
-# Add any custom keys
-ls ~/.ssh/*-id_*[^p][^u][^b] > /dev/null 2>&1 && ssh-add ~/.ssh/*-id_*[^p][^u][^b]
+# Try to add standard keys
+ssh-add
+
+# If either standard keys or added (0) or no keys were added to the agent (1)
+if [[ $? < 2 ]]; then
+  # Add any custom keys
+  ls ~/.ssh/*-id_*[^p][^u][^b] > /dev/null 2>&1 && ssh-add ~/.ssh/*-id_*[^p][^u][^b]
+fi
