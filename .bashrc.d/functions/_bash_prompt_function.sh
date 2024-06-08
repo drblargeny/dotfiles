@@ -161,7 +161,7 @@ function _bash_prompt_function() {
         TERM__STATUS_LINE_FROM=
     fi
 
-    # Setup the prompt
+    # Setup the primary prompt
     # \n[ISO 8601 short date/time] [# of jobs]
     PS1='\n'"$TERM__RESET_ATTRIBUTES""$TERM__BLUE"'\D{%FT%T} '"$TERM__RESET_ATTRIBUTES""$TERM__RED"'\j '
 
@@ -179,6 +179,14 @@ function _bash_prompt_function() {
     fi
     # [working dir]\n$
     PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__YELLOW"'\w'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"'\n\$ '
+
+    # Setup display before each command
+    # Output the timestamp of when we start the command
+    PS0="$TERM__RESET_ATTRIBUTES""$TERM__CYAN"'\D{%FT%T}'
+    # along with the command and history numbers
+    PS0+="$TERM__GREEN"' \#'"$TERM__YELLOW"' \!'
+    # mark start of command output
+    PS0+="$TERM__MAGENTA"' >>>'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"'\n'
 
     # Check if a status line is defined and available
     if [[ "$STATUS_LINE_TEXT" != "off" && -n "$TERM__STATUS_LINE_FROM" ]]; then
