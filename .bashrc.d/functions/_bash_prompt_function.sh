@@ -163,7 +163,7 @@ function _bash_prompt_function() {
 
     # Setup the prompt
     # \n[ISO 8601 short date/time] [# of jobs]
-    PS1='\n'"$TERM__RESET_ATTRIBUTES""$TERM__BLUE"'\D{%Y-%m-%dT%H:%M:%S} '"$TERM__RESET_ATTRIBUTES""$TERM__RED"'\j '
+    PS1='\n'"$TERM__RESET_ATTRIBUTES""$TERM__BLUE"'\D{%FT%T} '"$TERM__RESET_ATTRIBUTES""$TERM__RED"'\j '
 
     # Include any additional information from arg 2
     if [[ -n "$PROMPT_TEXT" ]]; then
