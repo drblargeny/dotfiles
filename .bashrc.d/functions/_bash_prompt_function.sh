@@ -1,6 +1,5 @@
 # Bash function for setting up a resonable terminal prompt
 # Sets PS1 for normal prompt
-# Sets SCREEN_TITLE for screen's title/status line
 # Sets TERM__COLORS with number of colors supported by terminal
 function _bash_prompt_function() {
     STATUS_LINE_TEXT="${1:-off}"
@@ -195,11 +194,6 @@ function _bash_prompt_function() {
         fi
         STATUS_LINE="$STATUS_LINE""$TERM__STATUS_LINE_FROM"'\]'
         PS1="$STATUS_LINE""$PS1"
-
-        # Also create an escape sequence that can set the status line from the hardstatus line within screen
-        export SCREEN_TITLE="$TERM__STATUS_LINE_TO"'screen %n %t%? [%h]%?'"$TERM__STATUS_LINE_FROM"
-    else
-        export SCREEN_TITLE=
     fi
 
     # Change the window title of X terminals
