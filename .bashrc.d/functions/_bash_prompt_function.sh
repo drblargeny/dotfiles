@@ -167,18 +167,18 @@ function _bash_prompt_function() {
 
     # Include any additional information from arg 2
     if [[ -n "$PROMPT_TEXT" ]]; then
-        PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__MAGENTA""$PROMPT_TEXT"' '
+        PS1+="$TERM__MAGENTA""$PROMPT_TEXT"' '
     fi
 
     # Use different colors when running and the root user
     # [user]@[host]:
     if [[ ${EUID} == 0 ]]; then
-        PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__RED"'\u@\h'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"':'
+        PS1+="$TERM__RED"'\u@\h'"$TERM__WHITE"':'
     else
-        PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__GREEN"'\u@\h'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"':'
+        PS1+="$TERM__GREEN"'\u@\h'"$TERM__WHITE"':'
     fi
     # [working dir]\n$
-    PS1="$PS1""$TERM__RESET_ATTRIBUTES""$TERM__YELLOW"'\w'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"'\n\$ '
+    PS1+="$TERM__YELLOW"'\w'"$TERM__RESET_ATTRIBUTES"'\n\$ '
 
     # Setup display before each command
     # Output the timestamp of when we start the command
@@ -186,7 +186,7 @@ function _bash_prompt_function() {
     # along with the command and history numbers
     PS0+="$TERM__GREEN"' \#'"$TERM__YELLOW"' \!'
     # mark start of command output
-    PS0+="$TERM__MAGENTA"' >>>'"$TERM__RESET_ATTRIBUTES""$TERM__WHITE"'\n'
+    PS0+="$TERM__MAGENTA"' >>>'"$TERM__RESET_ATTRIBUTES"'\n'
 
     # Check if a status line is defined and available
     if [[ "$STATUS_LINE_TEXT" != "off" && -n "$TERM__STATUS_LINE_FROM" ]]; then
@@ -194,13 +194,13 @@ function _bash_prompt_function() {
         # bash [working dir]
         STATUS_LINE='\['"$TERM__STATUS_LINE_TO"
         if [[ -z "$STATUS_LINE_TEXT" ]]; then
-            STATUS_LINE="$STATUS_LINE"'bash [\w]'
+            STATUS_LINE+='bash [\w]'
         elif [[ "$STATUS_LINE_TEXT" =~ \\w ]]; then
-            STATUS_LINE="$STATUS_LINE""$STATUS_LINE_TEXT"
+            STATUS_LINE+="$STATUS_LINE_TEXT"
         else
-            STATUS_LINE="$STATUS_LINE""$STATUS_LINE_TEXT"' [\w]'
+            STATUS_LINE+="$STATUS_LINE_TEXT"' [\w]'
         fi
-        STATUS_LINE="$STATUS_LINE""$TERM__STATUS_LINE_FROM"'\]'
+        STATUS_LINE+="$TERM__STATUS_LINE_FROM"'\]'
         PS1="$STATUS_LINE""$PS1"
     fi
 
