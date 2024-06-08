@@ -37,7 +37,7 @@ if [ -x /usr/bin/cygpath ]; then
 fi
 
 # if running bash
-if [ -n "$BASH_VERSION" && -f "$HOME/.bashrc" ]; then
+if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then
   # include .bashrc if it exists
   . "$HOME/.bashrc"
 else
