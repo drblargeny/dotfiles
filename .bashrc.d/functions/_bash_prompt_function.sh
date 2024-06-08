@@ -120,28 +120,28 @@ function _bash_prompt_function() {
             xterm-color)
                 # Assume 8 colors
                 TERM__COLORS=8
-                TERM__BLACK='\[\033[30m'
-                TERM__BLUE='\[\033[1m\[\033[34m'
-                TERM__CYAN='\[\033[36m'
-                TERM__GREEN='\[\033[32m'
-                TERM__MAGENTA='\[\033[35m'
-                TERM__RED='\[\033[31m'
-                TERM__YELLOW='\[\033[33m'
-                TERM__WHITE='\[\033[37m'
-                TERM__RESET_ATTRIBUTES='\[\033[m'
+                TERM__BLACK='\[\e[30m'
+                TERM__BLUE='\[\e[1m\[\e[34m'
+                TERM__CYAN='\[\e[36m'
+                TERM__GREEN='\[\e[32m'
+                TERM__MAGENTA='\[\e[35m'
+                TERM__RED='\[\e[31m'
+                TERM__YELLOW='\[\e[33m'
+                TERM__WHITE='\[\e[37m'
+                TERM__RESET_ATTRIBUTES='\[\e[m'
                 ;;
             *-256color)
                 # Assume 256 color xterm
                 TERM__COLORS=256
-                TERM__BLACK='\[\033[38;5;16m'
-                TERM__BLUE='\[\033[38;5;105m'
-                TERM__CYAN='\[\033[38;5;147m'
-                TERM__GREEN='\[\033[38;5;34m'
-                TERM__MAGENTA='\[\033[38;5;127m'
-                TERM__RED='\[\033[38;5;124m'
-                TERM__YELLOW='\[\033[38;5;142m'
-                TERM__WHITE='\[\033[38;5;145m'
-                TERM__RESET_ATTRIBUTES='\[\033(B\[\033[m'
+                TERM__BLACK='\[\e[38;5;16m'
+                TERM__BLUE='\[\e[38;5;105m'
+                TERM__CYAN='\[\e[38;5;147m'
+                TERM__GREEN='\[\e[38;5;34m'
+                TERM__MAGENTA='\[\e[38;5;127m'
+                TERM__RED='\[\e[38;5;124m'
+                TERM__YELLOW='\[\e[38;5;142m'
+                TERM__WHITE='\[\e[38;5;145m'
+                TERM__RESET_ATTRIBUTES='\[\e(B\[\e[m'
                 ;;
             *)
                 # default to no colors or status line
@@ -205,10 +205,10 @@ function _bash_prompt_function() {
     # Change the window title of X terminals
     case ${TERM} in
         xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-            PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
+            PROMPT_COMMAND='echo -ne "\e]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\a"'
             ;;
         screen*)
-            PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
+            PROMPT_COMMAND='echo -ne "\e_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\e\\"'
             ;;
         *)
             unset PROMPT_COMMAND
