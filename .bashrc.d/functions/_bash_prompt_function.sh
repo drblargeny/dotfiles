@@ -116,19 +116,6 @@ function _bash_prompt_function() {
 
         # Guess colors based on TERM type
         case "$TERM" in
-            xterm-color)
-                # Assume 8 colors
-                TERM__COLORS=8
-                TERM__BLACK='\[\e[30m'
-                TERM__BLUE='\[\e[1m\[\e[34m'
-                TERM__CYAN='\[\e[36m'
-                TERM__GREEN='\[\e[32m'
-                TERM__MAGENTA='\[\e[35m'
-                TERM__RED='\[\e[31m'
-                TERM__YELLOW='\[\e[33m'
-                TERM__WHITE='\[\e[37m'
-                TERM__RESET_ATTRIBUTES='\[\e[m'
-                ;;
             *-256color)
                 # Assume 256 color xterm
                 TERM__COLORS=256
@@ -141,6 +128,19 @@ function _bash_prompt_function() {
                 TERM__YELLOW='\[\e[38;5;142m'
                 TERM__WHITE='\[\e[38;5;145m'
                 TERM__RESET_ATTRIBUTES='\[\e(B\[\e[m'
+                ;;
+            xterm* | screen*)
+                # Assume 8 colors
+                TERM__COLORS=8
+                TERM__BLACK='\[\e[30m'
+                TERM__BLUE='\[\e[1m\[\e[34m'
+                TERM__CYAN='\[\e[36m'
+                TERM__GREEN='\[\e[32m'
+                TERM__MAGENTA='\[\e[35m'
+                TERM__RED='\[\e[31m'
+                TERM__YELLOW='\[\e[33m'
+                TERM__WHITE='\[\e[37m'
+                TERM__RESET_ATTRIBUTES='\[\e[m'
                 ;;
             *)
                 # default to no colors or status line
