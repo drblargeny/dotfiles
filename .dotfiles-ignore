@@ -124,6 +124,7 @@
 /.sh_history
 /.subversion
 /.sudo_as_admin_successful
+/.termux/
 /.thumbnails
 /.vim-temp
 /.vim/.netrwhist
