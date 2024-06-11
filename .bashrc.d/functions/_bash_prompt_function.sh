@@ -2,7 +2,7 @@
 # Sets PS1 for normal prompt
 # Sets TERM__COLORS with number of colors supported by terminal
 function _bash_prompt_function() {
-    STATUS_LINE_TEXT="${1:-off}"
+    STATUS_LINE_TEXT="${1:-bash}"
     PROMPT_TEXT="$2"
 
     # Check if tput is present to calculate values
@@ -193,9 +193,7 @@ function _bash_prompt_function() {
         # Prepend the escapes and desired info to the prompt
         # bash [working dir]
         STATUS_LINE='\['"$TERM__STATUS_LINE_TO"
-        if [[ -z "$STATUS_LINE_TEXT" ]]; then
-            STATUS_LINE+='bash [\w]'
-        elif [[ "$STATUS_LINE_TEXT" =~ \\w ]]; then
+        if [[ "$STATUS_LINE_TEXT" =~ \\w ]]; then
             STATUS_LINE+="$STATUS_LINE_TEXT"
         else
             STATUS_LINE+="$STATUS_LINE_TEXT"' [\w]'
