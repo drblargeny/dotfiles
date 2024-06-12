@@ -2,7 +2,7 @@
 # Sets PS1 for normal prompt
 # Sets TERM__COLORS with number of colors supported by terminal
 function _bash_prompt_function() {
-    STATUS_LINE_TEXT="${1:-bash}"
+    TITLE_TEXT="${1:-bash}"
     PROMPT_TEXT="$2"
 
     # Check if tput is present to calculate values
@@ -189,14 +189,14 @@ function _bash_prompt_function() {
     PS0+="$TERM__MAGENTA"' >>>'"$TERM__RESET_ATTRIBUTES"'\n'
 
     # Check if a status line is defined and available
-    if [[ "$STATUS_LINE_TEXT" != "off" && -n "$TERM__STATUS_LINE_FROM" ]]; then
+    if [[ "$TITLE_TEXT" != "off" && -n "$TERM__STATUS_LINE_FROM" ]]; then
         # Prepend the escapes and desired info to the prompt
         # bash [working dir]
         STATUS_LINE='\['"$TERM__STATUS_LINE_TO"
-        if [[ "$STATUS_LINE_TEXT" =~ \\w ]]; then
-            STATUS_LINE+="$STATUS_LINE_TEXT"
+        if [[ "$TITLE_TEXT" =~ \\w ]]; then
+            STATUS_LINE+="$TITLE_TEXT"
         else
-            STATUS_LINE+="$STATUS_LINE_TEXT"' [\w]'
+            STATUS_LINE+="$TITLE_TEXT"' [\w]'
         fi
         STATUS_LINE+="$TERM__STATUS_LINE_FROM"'\]'
         PS1="$STATUS_LINE""$PS1"
@@ -216,5 +216,5 @@ function _bash_prompt_function() {
     esac
 
     # Clean up variables so they don't polute the environment
-    unset PROMPT_TEXT STATUS_LINE_TERM STATUS_LINE_TEXT TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW
+    unset PROMPT_TEXT STATUS_LINE_TERM TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW TITLE_TEXT
 }
