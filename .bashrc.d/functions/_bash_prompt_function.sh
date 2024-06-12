@@ -119,28 +119,28 @@ function _bash_prompt_function() {
             *-256color)
                 # Assume 256 color xterm
                 TERM__COLORS=256
-                TERM__BLACK='\[\e[38;5;16m'
-                TERM__BLUE='\[\e[38;5;105m'
-                TERM__CYAN='\[\e[38;5;147m'
-                TERM__GREEN='\[\e[38;5;34m'
-                TERM__MAGENTA='\[\e[38;5;127m'
-                TERM__RED='\[\e[38;5;124m'
-                TERM__YELLOW='\[\e[38;5;142m'
-                TERM__WHITE='\[\e[38;5;145m'
-                TERM__RESET_ATTRIBUTES='\[\e(B\[\e[m'
+                TERM__BLACK='\e[38;5;16m'
+                TERM__BLUE='\e[38;5;105m'
+                TERM__CYAN='\e[38;5;147m'
+                TERM__GREEN='\e[38;5;34m'
+                TERM__MAGENTA='\e[38;5;127m'
+                TERM__RED='\e[38;5;124m'
+                TERM__YELLOW='\e[38;5;142m'
+                TERM__WHITE='\e[38;5;145m'
+                TERM__RESET_ATTRIBUTES='\e(B\e[m'
                 ;;
             xterm* | screen*)
                 # Assume 8 colors
                 TERM__COLORS=8
-                TERM__BLACK='\[\e[30m'
-                TERM__BLUE='\[\e[1m\[\e[34m'
-                TERM__CYAN='\[\e[36m'
-                TERM__GREEN='\[\e[32m'
-                TERM__MAGENTA='\[\e[35m'
-                TERM__RED='\[\e[31m'
-                TERM__YELLOW='\[\e[33m'
-                TERM__WHITE='\[\e[37m'
-                TERM__RESET_ATTRIBUTES='\[\e[m'
+                TERM__BLACK='\e[30m'
+                TERM__BLUE='\e[1m\e[34m'
+                TERM__CYAN='\e[36m'
+                TERM__GREEN='\e[32m'
+                TERM__MAGENTA='\e[35m'
+                TERM__RED='\e[31m'
+                TERM__YELLOW='\e[33m'
+                TERM__WHITE='\e[37m'
+                TERM__RESET_ATTRIBUTES='\e[m'
                 ;;
             *)
                 # default to no colors or status line
@@ -163,30 +163,30 @@ function _bash_prompt_function() {
 
     # Setup the primary prompt
     # \n[ISO 8601 short date/time] [# of jobs]
-    PS1='\n'"$TERM__RESET_ATTRIBUTES""$TERM__BLUE"'\D{%FT%T} '"$TERM__RESET_ATTRIBUTES""$TERM__RED"'\j '
+    PS1='\n\['"$TERM__RESET_ATTRIBUTES""$TERM__BLUE"'\]\D{%FT%T} \['"$TERM__RESET_ATTRIBUTES""$TERM__RED"'\]\j '
 
     # Include any additional information from arg 2
     if [[ -n "$PROMPT_TEXT" ]]; then
-        PS1+="$TERM__MAGENTA""$PROMPT_TEXT"' '
+        PS1+='\['"$TERM__MAGENTA"'\]'"$PROMPT_TEXT"' '
     fi
 
     # Use different colors when running and the root user
     # [user]@[host]:
     if [[ ${EUID} == 0 ]]; then
-        PS1+="$TERM__RED"'\u@\h'"$TERM__WHITE"':'
+        PS1+='\['"$TERM__RED"'\]\u@\h\['"$TERM__WHITE"'\]:'
     else
-        PS1+="$TERM__GREEN"'\u@\h'"$TERM__WHITE"':'
+        PS1+='\['"$TERM__GREEN"'\]\u@\h\['"$TERM__WHITE"'\]:'
     fi
     # [working dir]\n$
-    PS1+="$TERM__YELLOW"'\w'"$TERM__RESET_ATTRIBUTES"'\n\$ '
+    PS1+='\['"$TERM__YELLOW"'\]\w\['"$TERM__RESET_ATTRIBUTES"'\]\n\$ '
 
     # Setup display before each command
     # Output the timestamp of when we start the command
-    PS0="$TERM__RESET_ATTRIBUTES""$TERM__CYAN"'\D{%FT%T}'
+    PS0='\['"$TERM__RESET_ATTRIBUTES""$TERM__CYAN"'\]\D{%FT%T}'
     # along with the command and history numbers
-    PS0+="$TERM__GREEN"' \#'"$TERM__YELLOW"' \!'
+    PS0+='\['"$TERM__GREEN"'\] \#\['"$TERM__YELLOW"'\] \!'
     # mark start of command output
-    PS0+="$TERM__MAGENTA"' >>>'"$TERM__RESET_ATTRIBUTES"'\n'
+    PS0+='\['"$TERM__MAGENTA"'\] >>>\['"$TERM__RESET_ATTRIBUTES"'\]\n'
 
     # Check if a status line is defined and available
     if [[ "$TITLE_TEXT" != "off" && -n "$TERM__STATUS_LINE_FROM" ]]; then
