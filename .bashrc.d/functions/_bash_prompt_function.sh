@@ -166,7 +166,7 @@ function _bash_prompt_function() {
         PROMPT_COMMAND='echo -ne "${TERM__TITLE_TO}'
         if [[ -z "$SSH_CONNECTION" ]]; then
             # shell [~/working/dir]
-            PROMPT_COMMAND+='${0##*/} '
+            PROMPT_COMMAND+='${0##*[/-]} '
         else
             # user@host:~/working/dir
             PROMPT_COMMAND+='${USER}@${HOSTNAME%%.*}:'
