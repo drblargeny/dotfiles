@@ -2,8 +2,7 @@
 # Sets PS1 for normal prompt
 # Sets TERM__COLORS with number of colors supported by terminal
 function _bash_prompt_function() {
-    TITLE_TEXT="${1:-bash}"
-    PROMPT_TEXT="$2"
+    PROMPT_TEXT="$*"
 
     # Check if tput is present to calculate values
     if command -v tput >/dev/null; then
@@ -162,27 +161,24 @@ function _bash_prompt_function() {
     PS0+='\['"$TERM__MAGENTA"'\] >>>\['"$TERM__RESET_ATTRIBUTES"'\]\n'
 
     # Check if a title is defined and available
-    if [[ "$TITLE_TEXT" != "off" && -n "$TERM__TITLE_FROM" ]]; then
+    if [[ -n "$TERM__TITLE_FROM" ]]; then
         # Prepend the escapes and desired info to the prompt
         PROMPT_COMMAND='echo -ne "${TERM__TITLE_TO}'
         if [[ -z "$SSH_CONNECTION" ]]; then
-            # title [~/working/dir]
-            PROMPT_COMMAND+="$TITLE_TEXT"' ['
+            # shell [~/working/dir]
+            PROMPT_COMMAND+='${0##*/} '
         else
             # user@host:~/working/dir
             PROMPT_COMMAND+='${USER}@${HOSTNAME%%.*}:'
         fi
         PROMPT_COMMAND+='${PWD/#$HOME/\~}'
-        if [[ -z "$SSH_CONNECTION" ]]; then
-            PROMPT_COMMAND+=']'
-        fi
         PROMPT_COMMAND+='${TERM__TITLE_FROM}"'
     else
         unset PROMPT_COMMAND
     fi
 
     # Clean up variables so they don't polute the environment
-    unset PROMPT_TEXT STATUS_LINE_TERM TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__WHITE TERM__YELLOW TITLE_TEXT
+    unset PROMPT_TEXT STATUS_LINE_TERM TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__WHITE TERM__YELLOW
 }
 
 function _bash_prompt_function_term_title() {

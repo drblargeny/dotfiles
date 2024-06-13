@@ -130,7 +130,7 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # Setup default prompt and status line
-_bash_prompt_function '' "${debian_chroot:+($debian_chroot)}"
+_bash_prompt_function "${debian_chroot:+($debian_chroot)}"
 
 # enable color support of ls and also add handy aliases
 if command -v dircolors >/dev/null; then
