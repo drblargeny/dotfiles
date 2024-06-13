@@ -56,42 +56,15 @@ function _bash_prompt_function() {
 
         # Determine the status line terminal type
         if tput hs; then
-            # Current term supports a status line, use as-is
-            STATUS_LINE_TERM="$TERM"
-        elif [[ "$TERM" =~ ^xterm.* ]]; then
-            # xterms can usually use the window title, but they sometimes need a
-            # special term type to recognize this. Test for this type and use it
-            # when available
-            infocmp 'xterm+sl' >/dev/null 2>&1 && STATUS_LINE_TERM='xterm+sl' || STATUS_LINE_TERM=
-        elif [[ "$TERM" =~ ^screen.* ]]; then
-            # screen terminals can use either the hardstatus line or the window title
-            # but they need a special term type to recognize this
-            STATUS_LINE_TERM='screen-s'
+            # Current term supports a status line
+            # Use terminfo to get the escapes to start and end the status line
+            TERM__TITLE_TO=`tput tsl`
+            TERM__TITLE_FROM=`tput fsl`
         else
-            # other terms do not support a status line
-            STATUS_LINE_TERM=
+            # Use term pattern detection
+            _bash_prompt_function_term_title
         fi
 
-            # Check if a STATUS_LINE_TERM was set (i.e. status line is available)
-        if [[ -n "$STATUS_LINE_TERM" ]]; then
-            # This means we want to send information to the status line at each prompt,
-            # which will make it easier/possible to find windows/sessions by name
-
-            # Check to see if we're in a screen terminal
-            if [[ "$STATUS_LINE_TERM" =~ ^screen.* ]]; then
-                # In this case we actually want to write to the screen window title
-                # rather than the status line. So use the screen-specific escapes
-                TERM__STATUS_LINE_TO=`echo -ne '\ek'`
-                TERM__STATUS_LINE_FROM=`echo -ne '\e\\'`'\'
-            else
-                # Use terminfo to get the escapes to start and end the status line
-                TERM__STATUS_LINE_TO=`tput -T "$STATUS_LINE_TERM" tsl`
-                TERM__STATUS_LINE_FROM=`tput -T "$STATUS_LINE_TERM" fsl`
-            fi
-        else
-            TERM__STATUS_LINE_TO=
-            TERM__STATUS_LINE_FROM=
-        fi
     else
         # Can't read terminal via tput
 
@@ -156,9 +129,9 @@ function _bash_prompt_function() {
                 TERM__RESET_ATTRIBUTES=
                 ;;
         esac
-        # Assume no status line
-        TERM__STATUS_LINE_TO=
-        TERM__STATUS_LINE_FROM=
+
+        # Use term pattern detection
+        _bash_prompt_function_term_title
     fi
 
     # Setup the primary prompt
@@ -188,33 +161,47 @@ function _bash_prompt_function() {
     # mark start of command output
     PS0+='\['"$TERM__MAGENTA"'\] >>>\['"$TERM__RESET_ATTRIBUTES"'\]\n'
 
-    # Check if a status line is defined and available
-    if [[ "$TITLE_TEXT" != "off" && -n "$TERM__STATUS_LINE_FROM" ]]; then
+    # Check if a title is defined and available
+    if [[ "$TITLE_TEXT" != "off" && -n "$TERM__TITLE_FROM" ]]; then
         # Prepend the escapes and desired info to the prompt
-        # bash [working dir]
-        STATUS_LINE='\['"$TERM__STATUS_LINE_TO"
-        if [[ "$TITLE_TEXT" =~ \\w ]]; then
-            STATUS_LINE+="$TITLE_TEXT"
+        PROMPT_COMMAND='echo -ne "${TERM__TITLE_TO}'
+        if [[ -z "$SSH_CONNECTION" ]]; then
+            # title [~/working/dir]
+            PROMPT_COMMAND+="$TITLE_TEXT"' ['
         else
-            STATUS_LINE+="$TITLE_TEXT"' [\w]'
+            # user@host:~/working/dir
+            PROMPT_COMMAND+='${USER}@${HOSTNAME%%.*}:'
         fi
-        STATUS_LINE+="$TERM__STATUS_LINE_FROM"'\]'
-        PS1="$STATUS_LINE""$PS1"
+        PROMPT_COMMAND+='${PWD/#$HOME/\~}'
+        if [[ -z "$SSH_CONNECTION" ]]; then
+            PROMPT_COMMAND+=']'
+        fi
+        PROMPT_COMMAND+='${TERM__TITLE_FROM}"'
+    else
+        unset PROMPT_COMMAND
     fi
 
-    # Change the window title of X terminals
+    # Clean up variables so they don't polute the environment
+    unset PROMPT_TEXT STATUS_LINE_TERM TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__WHITE TERM__YELLOW TITLE_TEXT
+}
+
+function _bash_prompt_function_term_title() {
     case ${TERM} in
+        # Change the window title of X terminals
         xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-            PROMPT_COMMAND='echo -ne "\e]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\a"'
+            TERM__TITLE_TO='\e]0;'
+            TERM__TITLE_FROM='\a'
             ;;
+        # Change the screen application title
         screen*)
-            PROMPT_COMMAND='echo -ne "\e_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\e\\"'
+            TERM__TITLE_TO='\ek'
+            # Alternatively, change the hardstatus
+            #TERM__TITLE_TO='\e_'
+            TERM__TITLE_FROM='\e\\'
             ;;
         *)
-            unset PROMPT_COMMAND
+            # other terms do not support a status line
+            unset TERM__TITLE_FROM TERM__TITLE_TO
             ;;
     esac
-
-    # Clean up variables so they don't polute the environment
-    unset PROMPT_TEXT STATUS_LINE_TERM TERM__BLACK TERM__BLUE TERM__CYAN TERM__GREEN TERM__MAGENTA TERM__RED TERM__RESET_ATTRIBUTES TERM__STATUS_LINE_FROM TERM__STATUS_LINE_TO TERM__WHITE TERM__YELLOW TITLE_TEXT
 }
