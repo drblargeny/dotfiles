@@ -2,7 +2,7 @@
 # Sets PS1 for normal prompt
 # Sets TERM__COLORS with number of colors supported by terminal
 function _bash_prompt_function() {
-    PROMPT_TEXT="$*"
+    PROMPT_TEXT="$1"
 
     # Check if tput is present to calculate values
     if command -v tput >/dev/null; then
