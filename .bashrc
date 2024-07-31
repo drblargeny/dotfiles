@@ -218,6 +218,9 @@ unset color_auto
 # Load Python aliases if python command exists
 [ -n "$(command -v python)" ] && . ~/.bashrc.d/python-aliases
 
+# Alias for curl to work around the OpenSSL 3 change to legacy renegotiation
+alias curl.='OPENSSL_CONF=~/.openssl-UnsafeLegacyRengotiation.conf curl'
+
 # Umask
 #
 # /etc/profile sets 022, removing write perms to group + others.
