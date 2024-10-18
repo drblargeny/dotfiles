@@ -220,6 +220,7 @@ unset color_auto
 
 # Alias for curl to work around the OpenSSL 3 change to legacy renegotiation
 alias curl.='OPENSSL_CONF=~/.openssl-UnsafeLegacyRengotiation.conf curl'
+alias openssl.='OPENSSL_CONF=~/.openssl-UnsafeLegacyRengotiation.conf curl'
 
 # Umask
 #
