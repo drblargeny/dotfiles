@@ -1,9 +1,0 @@
-# Aliases for my shell-scripts project
-# Expects that project's main directory to be on the PATH
-
-# Alias for rsync-jlog.sh script to save a couple keystrokes
-alias rsync.=rsync-jlog.sh
-
-function REC() {
-  RequestExtractor.sh "$@" > "$1" && code "$1" < /dev/null
-}
