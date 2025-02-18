@@ -9,6 +9,8 @@
 /.bashrc.d/.ssh-agent-autostart-enabled
 # Ignore shell-script work-project aliases
 /.bashrc.d/shell-scripts-aliases
+# Ignore work Git details
+/.bashrc.d/git-env-rpmpcg
 
 # .m2
 /.m2/repository/
