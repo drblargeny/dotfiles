@@ -40,6 +40,8 @@
 /etc/
 
 # Do ignore this stuff
+*.gz
+*.log
 *.stackdump
 /.bash_history
 /.cache
