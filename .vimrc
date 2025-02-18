@@ -73,7 +73,11 @@ set ttimeout		" time out for key codes
 set ttimeoutlen=100	" wait up to 100ms after Esc for special key
 
 " Show @@@ in the last line if it is truncated.
-set display=truncate
+if version < 800
+  set display=lastline
+else
+  set display=truncate
+endif
 
 " Show a few lines of context around the cursor.  Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
@@ -159,9 +163,11 @@ if has("autocmd")
   augroup jbolton_rpmpcg
   au!
 
-  " xmllint should use the same indentation as vim (as defined by shiftwidth)
-  " see: let $XMLLINT_INDENT
-  autocmd OptionSet shiftwidth let $XMLLINT_INDENT=repeat(" ", &shiftwidth)
+  if version >= 800
+    " xmllint should use the same indentation as vim (as defined by shiftwidth)
+    " see: let $XMLLINT_INDENT
+    autocmd OptionSet shiftwidth let $XMLLINT_INDENT=repeat(" ", &shiftwidth)
+  endif
 
   augroup END
 
@@ -194,7 +200,7 @@ endif
 "
 " The matchit plugin makes the % command work better, but it is not backwards
 " compatible.
-if has('syntax') && has('eval')
+if has('syntax') && has('eval') && exists('packadd')
   packadd matchit
 endif
 " Don't want Insert mode by default
@@ -325,12 +331,14 @@ if has("multi_byte")
 
   " Show whitespace as characters
   set list
-  " NOTE: The original vim 7.4 release for windows only supported these
-  " options:
- "set listchars=eol:¶,tab:» ,trail:·,extends:…,precedes:…,conceal:§,nbsp:•
-  " You must use 7.4.1024 or newer for these:
-" set listchars=eol:¶,tab:» ,space:·,trail:·,extends:…,precedes:…,conceal:§,nbsp:•
-  set listchars=eol:¶,tab:»\ ,space:·,trail:·,extends:…,precedes:…,conceal:§,nbsp:␣
+  if has("patch-7.4.1024")
+    " You must use 7.4.1024 or newer for these:
+    set listchars=eol:¶,tab:»\ ,space:·,trail:·,extends:…,precedes:…,conceal:§,nbsp:␣
+  else
+    " NOTE: The original vim 7.4 release for windows only supported these
+    " options:
+    set listchars=eol:¶,tab:»\ ,trail:·,extends:…,precedes:…,conceal:§,nbsp:•
+  endif
 
   " Vistually indicate wrapped text
   set showbreak=↪\ 
