@@ -40,9 +40,11 @@
 /etc/
 
 # Do ignore this stuff
-*.gz
-*.log
-*.stackdump
+/*.gz
+/*.log
+/*.out
+/*.stackdump
+/*.txt
 /.bash_history
 /.cache
 /.config/autostart/
