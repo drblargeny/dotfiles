@@ -36,19 +36,22 @@ if [ -x /usr/bin/cygpath ]; then
   export LANG=$(locale -uU)
 fi
 
+# This file is not read by bash(1) if ~/.bash_profile or ~/.bash_login
+# exists.
+#
 # if running bash
-if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then
+if [ -n "${BASH_VERSION}" ] && [ -f "${HOME}/.bashrc" ]; then
   # include .bashrc if it exists
-  . "$HOME/.bashrc"
+  source "${HOME}/.bashrc"
 else
   # set PATH so it includes user's private bin if it exists
-  if [ -d "$HOME/bin" ] ; then
-      PATH="$HOME/bin:$PATH"
+  if [ -d "${HOME}/bin" ] ; then
+      PATH="${HOME}/bin:${PATH}"
   fi
 
   # set PATH so it includes user's private bin if it exists
-  if [ -d "$HOME/.local/bin" ] ; then
-      PATH="$HOME/.local/bin:$PATH"
+  if [ -d "${HOME}/.local/bin" ] ; then
+      PATH="${HOME}/.local/bin:${PATH}"
   fi
 fi
 

@@ -44,6 +44,9 @@ export HOME="${HOME%/}"
 # Use case-insensitive filename globbing
 # shopt -s nocaseglob
 #
+# Make bash append rather than overwrite the history on disk
+shopt -s histappend
+#
 # When changing directory small typos can be ignored by bash
 # for example, cd /vr/lgo/apaache would find /var/log/apache
 # shopt -s cdspell
@@ -90,12 +93,12 @@ shopt -s no_empty_cmd_completion
 
 # History Options
 #
-# don't put duplicate lines or lines starting with space in the history.
+# Don't put duplicate lines in the history.
+# export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+#
+# Don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
 
 # Ignore some controlling instructions
 # HISTIGNORE is a colon-delimited list of patterns which should be excluded.
@@ -150,15 +153,14 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Alias definitions.
+# Aliases
 #
 # Some people use a different file for aliases
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f "${HOME}/.bash_aliases" ]; then
+    source "${HOME}/.bash_aliases"
 fi
 
 # Umask
@@ -229,15 +231,15 @@ if [ -z "$TMP" ]; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
+if [ -d "${HOME}/bin" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="$HOME/bin:$PATH"
+    export PATH="${HOME}/bin:$PATH"
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
+if [ -d "${HOME}/.local/bin" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="$HOME/.local/bin:$PATH"
+    export PATH="${HOME}/.local/bin:$PATH"
 fi
 
 # export QT_SELECT=4

@@ -12,22 +12,22 @@ alias cp='cp -i'                          # confirm before overwriting something
 alias mv='mv -i'                          # confirm before moving something
 # Rather than ask after removing each file, only ask if there are more than 3 files
 #alias rm='rm -I'
-
+#
 # Default to human readable figures
 alias df='df -h'
 alias du='du -h'
 alias free='free -m'                      # show sizes in MB
-
+#
 # Misc :)
-#alias less='less -r'                          # raw control characters
-#alias more=less
-#alias np='nano -w PKGBUILD'
-#alias whence='type -a'                        # where, of a sort
+# alias less='less -r'                          # raw control characters
+# alias more=less
+# alias np='nano -w PKGBUILD'
+# alias whence='type -a'                        # where, of a sort
 [[ "$TERM__COLORS" > 0 ]] && color_auto='--color=auto' || color_auto=
 alias grep="grep $color_auto"                # show differences in colour
 alias egrep="egrep $color_auto"              # show differences in colour
 alias fgrep="fgrep $color_auto"              # show differences in colour
-
+#
 # Some shortcuts for different directory listings
 alias ls="ls -hp $color_auto --quoting-style=escape"   # add slash indicators to directories in colour and escape with slashes
 if command -v dir >/dev/null; then
