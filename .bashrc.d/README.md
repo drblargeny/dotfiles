@@ -1,6 +1,14 @@
 # Bash Configuration
 
-This folder contains two things:
+This folder contains:
+
+1. marker file to indicate that the ssh-agent should be automatically started
+
+    This is file is optional for the specific device and not comitted.  Create it by running
+
+    ```shell
+    touch ~/.bashrc.d/.ssh-agent-autostart-enabled
+    ```
 
 1. host-specific configurations (i.e., files starting with `host.`)
 
