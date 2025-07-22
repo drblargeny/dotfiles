@@ -102,6 +102,7 @@
 /.config/xed/
 /.config/xsettingsd/
 /.cpan
+/.dbus-keyrings
 /.dia
 /.dir_colors
 /.dmrc
@@ -147,6 +148,7 @@
 /.zcompdump
 /.zhistory
 /.zshrc
+/AppData
 /bin/eview
 /bin/evim
 /bin/gex
@@ -166,7 +168,7 @@
 /Documents
 /Downloads
 /jlog
-/OneDrive - rpmpcg.onmicrosoft.com
+/OneDrive*
 /Oracle Exports
 /Oracle/oracle.oracledevtools
 /Oracle/oradiag_boltonj
