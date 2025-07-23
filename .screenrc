@@ -90,17 +90,6 @@ terminfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
 #termcapinfo xterm*|rxvt*|kterm*|Eterm*|cygwin hs:ts=\E]0;:fs=\007:ds=\E]0;\007
 termcapinfo xterm*|rxvt*|kterm*|Eterm*|cygwin|mlterm hs:ts=\E]0;:fs=\007:ds=\E]0;screen\007
 
-# Use the hardstatus for an overview, suitable for a window title
-# screen [window] ([#])? [hstatus]?
-hardstatus string "screen %n %t%? [%h]%?"
-
-# Use the caption to display the details at the bottom of the screen
-# user@hostname | windows [truncate preserving right] | ISO8601 date/time
-# ANSI
-caption always "%{= 7;0}%{+ 2}$USER@%H%{-}%{+d 7}|%{-}%{+b 7}%n%f%t%{-}%?(%u)%?%?%+Lw%?%?  %-Lw%?%=%{+d 7}|%{-}%{+ i4}%0`"
-# Color Mode
-caption always "%{= 7;0}%{+ 2}$USER@%H%{-}%{+d 7}|%{-}%{+b 7}%n%f%t%{-}%?(%u)%?%?%+Lw%?%?  %-Lw%?%=%{+d 7}|%{-}%{+ 12}%0`"
-
 #
 # Do not use xterms alternate window buffer. 
 # This one would not add lines to the scrollback buffer.
@@ -116,6 +105,17 @@ terminfo hp700 'Z0=\E[?3h:Z1=\E[?3l:hs:ts=\E[62"p\E[0$~\E[2$~\E[1$}:fs=\E[0}\E[6
 #essential to have it here, as this is a slow terminal.
 termcap wy75-42 nx:xo:Z0=\E[?3h\E[31h:Z1=\E[?3l\E[31h
 terminfo wy75-42 nx:xo:Z0=\E[?3h\E[31h:Z1=\E[?3l\E[31h
+
+# Use the hardstatus for an overview, suitable for a window title
+# screen [window] ([#])? [hstatus]?
+hardstatus string "screen %n %t%? [%h]%?"
+
+# Use the caption to display the details at the bottom of the screen
+# user@hostname | windows [truncate preserving right] | ISO8601 date/time
+# ANSI
+caption always "%{= 7;0}%{+ 2}$USER@%H%{-}%{+d 7}|%{-}%{+b 7}%n%f%t%{-}%?(%u)%?%?%+Lw%?%?  %-Lw%?%=%{+d 7}|%{-}%{+ i4}%0`"
+# Color Mode
+caption always "%{= 7;0}%{+ 2}$USER@%H%{-}%{+d 7}|%{-}%{+b 7}%n%f%t%{-}%?(%u)%?%?%+Lw%?%?  %-Lw%?%=%{+d 7}|%{-}%{+ 12}%0`"
 
 # Remove some unwanted key bindings
 bind ^k   # kill
@@ -162,7 +162,6 @@ bufferfile $HOME/screen-exchange
 # more that the default 100 lines of scrollback
 defscrollback 10000
 
-# I don't like the time format of screen because it has a : which can't be present in file names
 # This will generate an appropriate ISO8601 basic date/time string ever minute and update the status line appropriately
 #backtick 0 60 60 date '+%Y%m%dT%H%M'
 backtick 0 60 60 date -Iminute
