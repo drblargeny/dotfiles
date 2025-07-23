@@ -96,7 +96,10 @@ hardstatus string "screen %n %t%? [%h]%?"
 
 # Use the caption to display the details at the bottom of the screen
 # user@hostname | windows [truncate preserving right] | ISO8601 date/time
-caption always "%{= kg} %{= .G}$USER@%H%{= .g} | %{= .G}%{=b .W}%n*%f%t%?(%u)%?%{= .w}%?%+Lw%?%?  %-Lw%?%-019=%{= .g} | %{= .B}%0` "
+# ANSI
+caption always "%{= 7;0}%{+ 2}$USER@%H%{-}%{+d 7}|%{-}%{+b 7}%n%f%t%{-}%?(%u)%?%?%+Lw%?%?  %-Lw%?%=%{+d 7}|%{-}%{+ i4}%0`"
+# Color Mode
+caption always "%{= 7;0}%{+ 2}$USER@%H%{-}%{+d 7}|%{-}%{+b 7}%n%f%t%{-}%?(%u)%?%?%+Lw%?%?  %-Lw%?%=%{+d 7}|%{-}%{+ 12}%0`"
 
 #
 # Do not use xterms alternate window buffer. 
