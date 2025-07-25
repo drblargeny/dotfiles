@@ -106,6 +106,16 @@ terminfo hp700 'Z0=\E[?3h:Z1=\E[?3l:hs:ts=\E[62"p\E[0$~\E[2$~\E[1$}:fs=\E[0}\E[6
 termcap wy75-42 nx:xo:Z0=\E[?3h\E[31h:Z1=\E[?3l\E[31h
 terminfo wy75-42 nx:xo:Z0=\E[?3h\E[31h:Z1=\E[?3l\E[31h
 
+# Screen 5.0.x passes the ANSI standout mode (smso/so and rmso/se) values
+# (\E[3m and \E[37m) directly to the parent xterm instead of converting
+# to xterm's values (\E[7m and # \E[27m). This causes text to be italicized
+# instead of highlighted/inverse. So, we'll use screen.xterm-new by default.
+# See: https://invisible-island.net/ncurses/terminfo.src.html#tic-screen
+# See: https://invisible-island.net/ncurses/terminfo.src.html#tic-screen_xterm-new
+# See: https://invisible-island.net/ncurses/terminfo.src.html#tic-xterm
+# See: https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Pm-m.1CA7
+term screen.xterm-new
+
 # Use the hardstatus for an overview, suitable for a window title
 # screen [window] ([#])? [hstatus]?
 hardstatus string "screen %n %t%? [%h]%?"
