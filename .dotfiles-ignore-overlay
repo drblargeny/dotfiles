@@ -24,3 +24,8 @@
 /.ssh/config.d/localhost
 !/.ssh/config.d/overlay.*
 
+!/.tmux.conf.d
+/.tmux.conf.d/*
+/.tmux.conf.d/host.*
+!/.tmux.conf.d/overlay.*
+/.tmux.conf.d/README.txt

@@ -34,6 +34,11 @@
 /.ssh/config.d/localhost
 /.ssh/config.d/overlay.*
 
+# .tmux.conf.d
+# Ignore host-specific and overlay files to avoid committing to the wrong repo
+/.tmux.conf.d/host.*
+/.tmux.conf.d/overlay.*
+
 # Files from .dotfiles-overlay
 /.digrc
 /Oracle/
