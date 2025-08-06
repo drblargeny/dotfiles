@@ -44,8 +44,8 @@
 /Oracle/
 /etc/
 
-# Ignore .config by default
-/.config
+# Ignore .config contents by default
+/.config/*
 # Explicitly add .config files/folders to version
 !/.config/nvim
 !/.config/powershell
