@@ -1,0 +1,10 @@
+# Screen 5.0.x passes the ANSI standout mode (smso/so and rmso/se) values
+# (\E[3m and \E[37m) directly to the parent xterm instead of converting
+# to xterm's values (\E[7m and # \E[27m). This causes text to be italicized
+# instead of highlighted/inverse. So, we'll use screen.xterm-new by default.
+# See: https://invisible-island.net/ncurses/terminfo.src.html#tic-screen
+# See: https://invisible-island.net/ncurses/terminfo.src.html#tic-screen_xterm-new
+# See: https://invisible-island.net/ncurses/terminfo.src.html#tic-xterm
+# See: https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Pm-m.1CA7
+term screen.xterm-new
+
