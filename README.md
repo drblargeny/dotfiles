@@ -20,9 +20,36 @@ one.  This was the "overlay" repository can be protected and hold sensitive
 information that can't be added to the public repository.  A `config.`
 alias/command is available for maintaining the "overlay" repository.
 
-## Installation
+## Prerequisites
 
-### Main/public repo
+### Required programs
+
+1. bash
+1. curl
+1. git
+1. neovim or vim
+
+### Minimal Git Configuration
+
+1. Make sure your local Git identity is configured before you make
+    any changes.  This profile expects this via environment
+    variables for the Git author/committer details to avoid putting them
+    in the [.gitconfig](.gitconfig) file.  You can use the
+    `~/.bashrc.d/host.HOST` file to export custom settings for this
+    host.
+
+    ```shell
+    vim ~/.bashrc.d/host.`hostname`
+    ```
+
+    * export [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)=mail@example.org
+    * export [`GIT_AUTHOR_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHORNAMEcode)='First Last'
+    * export [`GIT_COMMITTER_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTEREMAILcode)=mail@example.org
+    * export [`GIT_COMMITTER_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTERNAMEcode)='First Last'
+
+    ```shell
+    source ~/.bashrc.d/host.`hostname`
+    ```
 
 1. Decide if you will clone this project over HTTPS or SSH and ensure you meet
     the necessary requirements.
@@ -37,6 +64,10 @@ alias/command is available for maintaining the "overlay" repository.
         and loaded. See
         [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
         for more details.
+
+## Installation
+
+### Main/public repo
 
 1. Start a shell in your `HOME` directory
 
@@ -101,26 +132,6 @@ alias/command is available for maintaining the "overlay" repository.
     alias/command
 
 1. Commit and push any changes using the `config` alias/command
-
-    * ℹ️ Make sure your local Git profile is fully configured before you make
-        any changes.  This profile expects that you set these environment
-        variables for the Git author/committer details to avoid putting them
-        in the [.gitconfig](.gitconfig) file.  You can use the
-        `~/.bashrc.d/host.HOST` file to export custom settings for this
-        host.
-
-        ```shell
-        vim ~/.bashrc.d/host.`hostname`
-        ```
-
-        * export [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)=mail@example.org
-        * export [`GIT_AUTHOR_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHORNAMEcode)='First Last'
-        * export [`GIT_COMMITTER_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTEREMAILcode)=mail@example.org
-        * export [`GIT_COMMITTER_NAME`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITCOMMITTERNAMEcode)='First Last'
-
-        ```shell
-        source ~/.bashrc.d/host.`hostname`
-        ```
 
     ```shell
     config commit
