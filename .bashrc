@@ -12,7 +12,10 @@
 export HOME="${HOME%/}"
 
 # If not running interactively, don't do anything
-[[ "$-" != *i* ]] && return
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 # Shell Options
 #
@@ -26,9 +29,6 @@ export HOME="${HOME%/}"
 #
 # Use case-insensitive filename globbing
 # shopt -s nocaseglob
-#
-# Make bash append rather than overwrite the history on disk
-shopt -s histappend
 #
 # When changing directory small typos can be ignored by bash
 # for example, cd /vr/lgo/apaache would find /var/log/apache
@@ -79,9 +79,12 @@ shopt -s no_empty_cmd_completion
 # Don't put duplicate lines in the history.
 # export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 #
-# Don't put duplicate lines or lines starting with space in the history.
+# don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 # Ignore some controlling instructions
 # HISTIGNORE is a colon-delimited list of patterns which should be excluded.
@@ -106,44 +109,8 @@ for func_file in ~/.bashrc.d/functions/*; do
     source "$func_file"
 done
 # Some people use a different file for functions
-if [ -f "${HOME}/.bash_functions" ]; then
-  source "${HOME}/.bash_functions"
-fi
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# Setup default prompt and status line
-_bash_prompt_function "${debian_chroot:+($debian_chroot)}"
-
-# enable color support of ls and also add handy aliases
-if command -v dircolors >/dev/null; then
-    for DIR_COLORS in ~/.dircolors.d/{256,16,8}/.dircolors; do
-        [[ -r "$DIR_COLORS" && ( $TERM__COLORS = $colors || $TERM__COLORS > $colors ) ]] && break
-        unset DIR_COLORS
-    done
-    if [[ -z "$DIR_COLORS" ]]; then
-        for DIR_COLORS in ~/.dir{_,}colors /etc/DIR{_,}COLORS; do
-            [[ -r "$DIR_COLORS" ]] && break
-        done
-    fi
-    #echo "$DIR_COLORS"
-    test -r "$DIR_COLORS" && eval "$(dircolors -b $DIR_COLORS)" || eval "$(dircolors -b)"
-fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# Aliases
-#
-# Some people use a different file for aliases
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-if [ -f "${HOME}/.bash_aliases" ]; then
-    source "${HOME}/.bash_aliases"
+if [ -f ~/.bash_functions ]; then
+  source ~/.bash_functions
 fi
 
 # Umask
@@ -171,7 +138,6 @@ shopt -s expand_aliases
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-
 # settings for less
 #
 # NOTE: If these defaults need to be ignored/changed for a particular less
@@ -192,6 +158,12 @@ shopt -s expand_aliases
 # -n    Suppresses  line  numbers.  The default (to use line numbers) may cause
 #       less to run more slowly in some cases
 export LESS="MRSXWn"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
 
 # Setup TMPDIR, TEMP and TMP
 if [ -z "$TMPDIR" ]; then
@@ -214,27 +186,48 @@ if [ -z "$TMP" ]; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "${HOME}/bin" ] ; then
+if [ -d ~/bin ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
     export PATH="${HOME}/bin:$PATH"
 fi
 
+# Setup default prompt and status line
+_bash_prompt_function "${debian_chroot:+($debian_chroot)}"
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    for dircolors in ~/.dircolors.d/{256,16,8}/.dircolors; do
+        [[ -r "$dircolors" && ( $TERM__COLORS = $colors || $TERM__COLORS > $colors ) ]] && break
+        unset dircolors
+    done
+    if [[ -z "$dircolors" ]]; then
+        for dircolors in ~/.dir{_,}colors /etc/DIR{_,}COLORS; do
+            [[ -r "$dircolors" ]] && break
+        done
+    fi
+    #echo "$dircolors"
+    test -r "$dircolors" && eval "$(dircolors -b $dircolors)" || eval "$(dircolors -b)"
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
 # set PATH so it includes user's private bin if it exists
-if [ -d "${HOME}/.local/bin" ] ; then
+if [ -d "~/.local/bin" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="${HOME}/.local/bin:$PATH"
+    export PATH="~/.local/bin:$PATH"
 fi
 
 # set PATH so it includes overlay bin if it exists
-if [ -d "${HOME}/bin.d/overlay" ] ; then
+if [ -d "~/bin.d/overlay" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="${HOME}/bin.d/overlay:$PATH"
+    export PATH="~/bin.d/overlay:$PATH"
 fi
 
 # set PATH so it includes host bin if it exists
-if [ -d "${HOME}/bin.d/host.${HOSTNAME}" ] ; then
+if [ -d "~/bin.d/host.${HOSTNAME}" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="${HOME}/bin.d/host.${HOSTNAME}:$PATH"
+    export PATH="~/bin.d/host.${HOSTNAME}:$PATH"
 fi
 
 # export QT_SELECT=4
@@ -243,6 +236,15 @@ fi
 export SVN_EDITOR=vim
 export EDITOR=vim
 export VISUAL=vim
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
 # Bash configuration for this host
 if [ -f ~/.bashrc.d/host."$HOSTNAME" ]; then
@@ -262,7 +264,7 @@ fi
 # sources /etc/bash.bashrc).
 if [ -z "$BASH_COMPLETION_VERSINFO" ]; then
   if ! shopt -oq posix; then
-    if [ -r /usr/share/bash-completion/bash_completion ]; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
       . /usr/share/bash-completion/bash_completion
     elif [ -f /etc/bash_completion ]; then
       . /etc/bash_completion
