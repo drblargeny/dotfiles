@@ -67,6 +67,7 @@
 /.dotfiles
 /.dotfiles-overlay
 /.dotnet
+/.face
 /.gem
 /.gimp-2.8
 /.git-for-windows-updater
@@ -80,12 +81,16 @@
 /.lesshst
 /.linuxmint/
 /.local/
+/.mono
 /.motd_shown
 /.mozilla
 /.nanorc
+/.pam_environment
 /.parallel
+/.pki
 /.python-gitlab.cfg
 /.python_history
+/.recently-used
 /.sdkman
 /.serverauth.*
 /.sh_history
@@ -93,16 +98,21 @@
 /.sudo_as_admin_successful
 /.termux/
 /.thumbnails
+/.var
 /.vim-temp
 /.vim/.netrwhist
 /.vim/spell/*.spl
 /.viminfo
 /.vscode-server
+/.vscode/argv.json
+/.vscode/extensions
 /.wget-hsts
 /.Xauthority
 /.Xclients
 /.xinitrc
+/.xinputrc
 /.xsession-errors*
+/.xsessionrc
 /.zcompdump
 /.zhistory
 /.zshrc
@@ -139,5 +149,6 @@
 /vimfiles/.netrwhist
 /vimfiles/spell/*.spl
 /vimtemp
+/VirtualBox VMs
 /workspaces
 
