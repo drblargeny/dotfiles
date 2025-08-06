@@ -41,7 +41,7 @@ else
   alias vdir="ls $color_auto --format=long"
 fi
 # some more ls aliases
-alias ll="ls $color_auto -l --quoting-style=escape"      # long list
+alias ll="ls $color_auto -alF --quoting-style=escape"     # long list
 alias la="ls $color_auto -A"                              # all but . and ..
 alias l="ls $color_auto -CF"
 
