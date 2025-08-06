@@ -1,5 +1,8 @@
 # Alias definitions.
 
+# Load --color option for use in aliases
+[[ "$TERM__COLORS" > 0 ]] && color_auto='--color=auto' || color_auto=
+
 # Some shortcuts for different directory listings
 alias ls="ls -hp $color_auto --quoting-style=escape"   # add slash indicators to directories in colour and escape with slashes
 if command -v dir >/dev/null; then
@@ -13,7 +16,6 @@ else
   alias vdir="ls $color_auto --format=long"
 fi
 
-[[ "$TERM__COLORS" > 0 ]] && color_auto='--color=auto' || color_auto=
 alias grep="grep $color_auto"                # show differences in colour
 alias egrep="egrep $color_auto"              # show differences in colour
 alias fgrep="fgrep $color_auto"              # show differences in colour
@@ -45,8 +47,6 @@ alias free='free -m'                      # show sizes in MB
 # alias np='nano -w PKGBUILD'
 # alias whence='type -a'                        # where, of a sort
 
-unset color_auto
-
 # rsync display options
 alias rsync='rsync -z --progress'
 
@@ -64,4 +64,7 @@ alias git.branch=git-dir-branch.sh
 
 # Alias for wmvn.sh script to save a couple of keystrokes
 alias mvn.=wmvn.sh
+
+# Unset --color option
+unset color_auto
 
