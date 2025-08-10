@@ -28,6 +28,7 @@ alias/command is available for maintaining the "overlay" repository.
 1. curl
 1. git
 1. neovim or vim
+1. openssh if using using SSH keys
 
 ### Minimal Git Configuration
 
