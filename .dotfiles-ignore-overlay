@@ -3,6 +3,8 @@
 
 !/.bashrc.d/overlay.*
 
+!/.bin.d/overlay
+
 !/.m2
 /.m2/README.md
 /.m2/repository
