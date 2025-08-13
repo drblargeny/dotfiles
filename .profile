@@ -40,13 +40,13 @@ else
   # set PATH so it includes overlay bin if it exists
   if [ -d "${HOME}/bin.d/overlay" ] ; then
       # NOTE: Use absolute path to avoid security issues with relative paths
-      export PATH="${HOME}/bin.d/overlay:$PATH"
+      PATH="${HOME}/bin.d/overlay:$PATH"
   fi
 
   # set PATH so it includes host bin if it exists
   if [ -d "${HOME}/bin.d/host.${HOSTNAME}" ] ; then
       # NOTE: Use absolute path to avoid security issues with relative paths
-      export PATH="${HOME}/bin.d/host.${HOSTNAME}:$PATH"
+      PATH="${HOME}/bin.d/host.${HOSTNAME}:$PATH"
   fi
 fi
 
