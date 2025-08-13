@@ -215,19 +215,19 @@ fi
 # set PATH so it includes user's private bin if it exists
 if [ -d "~/.local/bin" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="~/.local/bin:$PATH"
+    export PATH="${HOME}/.local/bin:$PATH"
 fi
 
 # set PATH so it includes overlay bin if it exists
 if [ -d "~/bin.d/overlay" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="~/bin.d/overlay:$PATH"
+    export PATH="${HOME}/bin.d/overlay:$PATH"
 fi
 
 # set PATH so it includes host bin if it exists
 if [ -d "~/bin.d/host.${HOSTNAME}" ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths
-    export PATH="~/bin.d/host.${HOSTNAME}:$PATH"
+    export PATH="${HOME}/bin.d/host.${HOSTNAME}:$PATH"
 fi
 
 # export QT_SELECT=4
