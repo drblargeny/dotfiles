@@ -305,7 +305,7 @@ endif
 " Only apply it when VIM supports it
 if has("multi_byte")
   " Preserve input encoding
-  if &termencoding == ""
+  if exists("+termencoding") && (&termencoding == "")
     let &termencoding = &encoding
   endif
 
@@ -462,7 +462,9 @@ noremap  <silent> <F11> <Cmd>call ToggleColorcolumn()<CR>
 inoremap <silent> <F11> <C-o><Cmd>call ToggleColorcolumn()<CR>
 
 " Use <S-F11> to toggle between 'paste' and 'nopaste'
-set pastetoggle=<S-F11>
+if exists("+pastetoggle")
+  set pastetoggle=<S-F11>
+endif
 
 "------------------------------------------------------------
 " Indentation options {{{1
