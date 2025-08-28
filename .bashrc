@@ -254,6 +254,8 @@ fi
 # Auto-start ssh-agent
 if [ -f ~/.ssh/agent.autostart ]; then
     . ~/.bashrc.d/ssh-agent
+elif [ -f ~/.ssh/agent.npiperelay ]; then
+    . ~/.bashrc.d/ssh-agent-npiperelay
 fi
 
 # Source the alias to provide Git versioning of dotfiles
