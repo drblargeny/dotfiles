@@ -252,7 +252,7 @@ if [ -f ~/.bashrc.d/host."$HOSTNAME" ]; then
 fi
 
 # Auto-start ssh-agent
-if [ -f ~/.bashrc.d/.ssh-agent-autostart-enabled ]; then
+if [ -f ~/.ssh/agent.autostart ]; then
     . ~/.bashrc.d/ssh-agent
 fi
 

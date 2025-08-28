@@ -7,7 +7,7 @@ This folder contains:
     This is file is optional for the specific device and not comitted.  Create it by running
 
     ```shell
-    touch ~/.bashrc.d/.ssh-agent-autostart-enabled
+    touch ~/.ssh/agent.autostart
     ```
 
 1. host-specific configurations (i.e., files starting with `host.`)
