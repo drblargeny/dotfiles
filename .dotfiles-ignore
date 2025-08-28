@@ -1,6 +1,9 @@
 # Don't ignore this bin folder because it contains custom scripts
 !/bin
 
+#Ignore the bin.d overlay folder
+/bin.d/overlay
+
 # .bashrc.d
 # Host machine-specific files are ignored by default to prevent accidental
 # commits into the wrong repo
@@ -135,6 +138,7 @@
 /dotfiles
 /Downloads
 /jlog
+/go
 /OneDrive*
 /Oracle Exports
 /Oracle/oracle.oracledevtools
