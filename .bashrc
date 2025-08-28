@@ -218,6 +218,12 @@ if [ -d ~/.local/bin ] ; then
     export PATH="${HOME}/.local/bin:$PATH"
 fi
 
+# set PATH so it includes local bin if it exists
+if [ -d ~/bin.d/local ] ; then
+    # NOTE: Use absolute path to avoid security issues with relative paths
+    export PATH="${HOME}/bin.d/local:$PATH"
+fi
+
 # set PATH so it includes overlay bin if it exists
 if [ -d ~/bin.d/overlay ] ; then
     # NOTE: Use absolute path to avoid security issues with relative paths

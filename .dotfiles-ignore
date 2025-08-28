@@ -1,6 +1,8 @@
 # Don't ignore this bin folder because it contains custom scripts
 !/bin
 
+#Ignore the bin.d local folder
+/bin.d/local
 #Ignore the bin.d overlay folder
 /bin.d/overlay
 
