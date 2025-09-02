@@ -31,7 +31,9 @@ export -f runGit
   # Enumerate all the projects in the current directory
   find -L . -maxdepth 2 -name .git -printf %h\\n |
     # Check if the parallel command exists
-    if (parallel --help >/dev/null 2>&1); then
+    # But skip using it if we're using npiperelay for an agent
+    #   It slows down the overall update, but allows for more stable interactions with the SSH agent
+    if command -v parallel >/dev/null && [ ! -f ~/.ssh/agent.npiperelay ]; then
       # Run using parallel
       echo Executing in parallel
       parallel runGit '{}' "$@"
