@@ -1,6 +1,8 @@
 # Initialize ssh-agent relay using npiperelay
 # See: https://github.com/albertony/npiperelay?tab=readme-ov-file#connect-to-windows-ssh-agent
 # See: https://stuartleeks.com/posts/wsl-ssh-key-forward-to-windows/
+# See: https://sxda.io/posts/sharing-ssh-agent-wsl/
+# See: https://dev.to/andrewdoesinfra/using-windows-ssh-agent-in-wsl2-a-complete-guide-50oi
 
 # Run if this is an interactive shell
 if [ -n "$PS1" ]; then
@@ -9,7 +11,7 @@ if [ -n "$PS1" ]; then
     export SSH_AUTH_SOCK=$HOME/.ssh/agent.sock
 
     # Check if SSH-Agent relay is already running
-    if ! pgrep -f "npiperelay(.exe)? -ei -s //./pipe/openssh-ssh-agent" > /dev/null; then
+    if ! pgrep -f "npiperelay(.exe)? -p -l -ei -s //./pipe/openssh-ssh-agent" > /dev/null; then
         # SSH-Agent relay is not running
         if [[ -S $SSH_AUTH_SOCK ]]; then
             # not expecting the socket to exist as the forwarding command isn't running (http://www.tldp.org/LDP/abs/html/fto.html)
@@ -19,6 +21,6 @@ if [ -n "$PS1" ]; then
         # Starting SSH-Agent relay
         # setsid to force new session to keep running
         # set socat to listen on $SSH_AUTH_SOCK and forward to npiperelay which then forwards to openssh-ssh-agent on windows
-        (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
+        (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"npiperelay.exe -p -l -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
     fi
 fi
