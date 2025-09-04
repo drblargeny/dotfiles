@@ -40,7 +40,7 @@ alias/command is available for maintaining the "overlay" repository.
     host.
 
     ```shell
-    vim ~/.bashrc.d/host.`hostname`
+    mkdir ~/.bashrc.d; vim ~/.bashrc.d/host.`hostname`
     ```
 
     * export [`GIT_AUTHOR_EMAIL`](https://git-scm.com/docs/git#Documentation/git.txt-codeGITAUTHOREMAILcode)=mail@example.org
