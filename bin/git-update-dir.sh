@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to update specified folders that each containing one or more Git projects.
+# Script to run git-dir.sh in each of the specified folders.
 
 # Confirm some workspaces were provided
 if [[ $# == 0 ]]; then
