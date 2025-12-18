@@ -184,7 +184,7 @@ function _bash_prompt_function() {
 function _bash_prompt_function_term_title() {
     case ${TERM} in
         # Change the window title of X terminals
-        xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
+        xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*|tmux*)
             TERM__TITLE_TO='\e]0;'
             TERM__TITLE_FROM='\a'
             ;;
