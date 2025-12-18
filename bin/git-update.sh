@@ -30,4 +30,4 @@ fi
   # Pipe all output to a pager so that it can be reviewed
   # --HILITE-UNREAD   highlights first new line after multiline page change
   # +F    activates 'tail' mode and follows latest output
-  less -p '^(From|Updating|(error|fatal):)' --HILITE-UNREAD +F
+  less -p '^(From|Updating|(error|fatal):)' --HILITE-UNREAD +G
