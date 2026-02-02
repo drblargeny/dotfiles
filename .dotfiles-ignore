@@ -75,6 +75,7 @@
 /.gimp-2.8
 /.git-for-windows-updater
 /.gitignore
+/.gk
 /.gnupg
 /.gtk-bookmarks
 /.gtkrc-2.0
@@ -139,6 +140,7 @@
 /Documents
 /dotfiles
 /Downloads
+/installs
 /jlog
 /go
 /OneDrive*
@@ -146,6 +148,7 @@
 /Oracle/oracle.oracledevtools
 /Oracle/oradiag_boltonj
 /perl5
+/Pictures
 /RPM Performance Coatings
 /rpmpcg.onmicrosoft.com
 /screen-exchange
