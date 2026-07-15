@@ -51,8 +51,16 @@
 /.config/*
 # Explicitly add .config files/folders to version
 !/.config/nvim
-!/.config/powershell
 !/.config/spring-boot
+
+# PowerShell config
+# Ignore poweshell modules
+/.config/powershell/Modules
+# Ignore the standard per-machine configuration
+# See: https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/creating-profiles?view=powershell-7.6#the-profile-variable
+/.config/powershell/Microsoft.PowerShell_profile.ps1
+# Otherwise, don't ignore powershell files
+!/.config/powershell
 
 # Do ignore this stuff
 /*.gz
