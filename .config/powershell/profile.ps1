@@ -1,17 +1,22 @@
 ## Map PSDrives to other registry hives
-if (!(Test-Path HKCR:)) {
+## But only when a Registry provider exists
+if (!(Test-Path HKCR:) -and (Get-PSProvider Registry -ErrorAction Ignore)) {
     $null = New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
     $null = New-PSDrive -Name HKU -PSProvider Registry -Root HKEY_USERS
 }
 
 ## Customize the prompt
 function prompt {
-    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-    $principal = [Security.Principal.WindowsPrincipal] $identity
-    $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
-
-$prefix = if (Test-Path Variable:/PSDebugContext) { '[DBG]: ' } else { '' }
-    if ($principal.IsInRole($adminRole)) {
+    if ([OperatingSystem]::isWindows()) {
+      $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+      $principal = [Security.Principal.WindowsPrincipal] $identity
+      $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+      $isAdminRole = $principal.IsInRole($adminRole)
+    } else {
+      $isAdminRole = (id -u) -eq 0
+    }
+    $prefix = if (Test-Path Variable:/PSDebugContext) { '[DBG]: ' } else { '' }
+    if ($isAdminRole) {
         $prefix = "[ADMIN]:$prefix"
     }
     $body = 'PS ' + $PWD.path
