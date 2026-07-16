@@ -45,10 +45,32 @@ if ($PSVersionTable.PSVersion.ToString() -lt '7.2.0') {
 $PSROptions = @{
     ContinuationPrompt = '  '
     Colors             = @{
-        Operator         = $PSStyle.Foreground.Magenta
-        Parameter        = $PSStyle.Foreground.Magenta
-        Selection        = $PSStyle.Background.BrightBlack
-        InLinePrediction = $PSStyle.Foreground.BrightYellow + $PSStyle.Background.BrightBlack
+        #Operator         = $PSStyle.Foreground.Magenta
+        #Parameter        = $PSStyle.Foreground.Magenta
+        #Selection        = $PSStyle.Background.BrightBlack
+        #InLinePrediction = $PSStyle.Foreground.BrightYellow + $PSStyle.Background.BrightBlack
+        Command                = $PSStyle.Foreground.BrightYellow
+        Comment                = $PSStyle.Foreground.Green
+        ContinuationPrompt     = $PSStyle.Foreground.White
+        #DefaultToken           = $PSStyle.Foreground.White
+        Emphasis               = $PSStyle.Foreground.BrightCyan
+        Error                  = $PSStyle.Foreground.BrightRed
+        InlinePrediction       = $PSStyle.Foreground.BrightWhite + $PSStyle.Dim + $PSStyle.Italic
+        #InlinePrediction       = "`e[38;5;238m"
+        #InlinePrediction       = $PSStyle.Foreground.White + $PSStyle.Dim
+        Keyword                = $PSStyle.Foreground.BrightGreen
+        ListPrediction         = $PSStyle.Foreground.Yellow
+        ListPredictionSelected = $PSStyle.Foreground.BrightWhite + $PSStyle.Background.BrightBlack
+        #ListPredictionSelected = "`e[48;5;238m"
+        ListPredictionTooltip  = $PSStyle.Foreground.BrightWhite + $PSStyle.Dim + $PSStyle.Italic
+        Member                 = $PSStyle.Foreground.White
+        Number                 = $PSStyle.Foreground.BrightWhite
+        Operator               = $PSStyle.Foreground.BrightBlack
+        Parameter              = $PSStyle.Foreground.BrightBlack
+        Selection              = $PSStyle.Foreground.Black + $PSStyle.Background.White
+        String                 = $PSStyle.Foreground.Cyan
+        Type                   = $PSStyle.Foreground.White
+        Variable               = $PSStyle.Foreground.BrightGreen
     }
 }
 Set-PSReadLineOption @PSROptions
