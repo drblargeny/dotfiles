@@ -32,6 +32,33 @@ function prompt {
     $suffix = $(if ($NestedPromptLevel -ge 1) { '>>' }) + '> '
     "${prefix}`n${body}${suffix}"
 }
+function preprompt {
+    $date = $PSStyle.Foreground.Cyan + ([DateTime]::Now).toString("s")
+    $history = @(Get-History)
+    $historySize = $PSStyle.Foreground.Green + ($history.Count + 1)
+    $lastId = if ($history.Count -gt 0) {
+        $history[$history.Count - 1].Id + 1
+    } else {
+        1
+    }
+    $lastId = $PSStyle.Foreground.Yellow + $lastId
+    $suffix = $PSStyle.Foreground.Magenta + ">>>" + $PSStyle.Reset
+    "${date} ${historySize} ${lastId} ${suffix}"
+}
+
+# Override PSConsoleHostReadLine to provide functionality similar to bash PS0
+# See: https://github.com/PowerShell/PowerShell/issues/14484#issuecomment-751779615
+function PSConsoleHostReadLine {
+  # Prompt the user for a command line to submit, save it in a variable and
+  # pass it through, by enclosing it in (...)
+  ($line = [Microsoft.PowerShell.PSConsoleReadLine]::ReadLine($Host.Runspace, $ExecutionContext, $true))
+
+  if ($line.Trim()) { # Only react to non-blank lines.
+    # Synthesize status info.
+    preprompt | Out-Host
+  }
+
+}
 
 ## Create $PSStyle if running on a version older than 7.2
 ## - Add other ANSI color definitions as needed
