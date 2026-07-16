@@ -31,3 +31,11 @@
 /.tmux.conf.d/host.*
 !/.tmux.conf.d/overlay.*
 /.tmux.conf.d/README.txt
+
+# PowerShell
+# Version the per-machine config
+!/.config
+/.config/*
+!/.config/powershell
+/.config/powershell/*
+!/.config/powershell/Microsoft.PowerShell_profile.ps1
