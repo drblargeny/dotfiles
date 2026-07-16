@@ -15,13 +15,22 @@ function prompt {
     } else {
       $isAdminRole = (id -u) -eq 0
     }
-    $prefix = if (Test-Path Variable:/PSDebugContext) { '[DBG]: ' } else { '' }
-    if ($isAdminRole) {
-        $prefix = "[ADMIN]:$prefix"
+    $prefix = $PSStyle.Foreground.BrightBlue + ([DateTime]::Now).toString("s")
+    if (Test-Path Variable:/PSDebugContext) { 
+        $prefix = "[DBG]: ${prefix}"
     }
-    $body = 'PS ' + $PWD.path
+    $username = "${env:USERNAME}@${env:COMPUTERNAME} " + $PSStyle.Reset
+    if ($env:USERDOMAIN) {
+        $username = "${env:USERDOMAIN}+${username}"
+    }
+    if ($isAdminRole) {
+        $prefix = $PSStyle.Foreground.Red + "[ADMIN]:${prefix} " + $PSStyle.Foreground.Red + $username
+    } else {
+        $prefix += ' ' + $PSStyle.Foreground.Green + $username
+    }
+    $body = 'PS ' + $PSStyle.Foreground.Yellow + $PWD.path + $PSStyle.Reset
     $suffix = $(if ($NestedPromptLevel -ge 1) { '>>' }) + '> '
-    "${prefix}${body}${suffix}"
+    "${prefix}`n${body}${suffix}"
 }
 
 ## Create $PSStyle if running on a version older than 7.2
