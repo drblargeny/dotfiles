@@ -19,14 +19,15 @@ function prompt {
     if (Test-Path Variable:/PSDebugContext) { 
         $prefix = "[DBG]: ${prefix}"
     }
+    $jobs = $PSStyle.Foreground.Red + @(Get-Job | Where-Object { $_.State -ne 'Completed' -and $_.State -ne 'Failed' }).Count
     $username = [Environment]::UserName + '@' + [Environment]::MachineName + $PSStyle.Reset
     if ([Environment]::UserDomainName -ne [Environment]::MachineName) {
         $username = [Environment]::UserDomainName + "+${username}"
     }
     if ($isAdminRole) {
-        $prefix = $PSStyle.Foreground.Red + "[ADMIN]:${prefix} " + $PSStyle.Foreground.Red + $username
+        $prefix = $PSStyle.Foreground.Red + "[ADMIN]:${prefix} " + $PSStyle.Foreground.Red + "$jobs $username"
     } else {
-        $prefix += ' ' + $PSStyle.Foreground.Green + $username
+        $prefix += $PSStyle.Foreground.Red + " $jobs " + $PSStyle.Foreground.Green + $username
     }
     $body = 'PS ' + $PSStyle.Foreground.Yellow + $PWD.path + $PSStyle.Reset
     $suffix = $(if ($NestedPromptLevel -ge 1) { '>>' }) + '> '
