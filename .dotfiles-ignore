@@ -86,6 +86,7 @@
 /.asoundrc
 /.bash_history
 /.cache
+/.copilot
 /.cpan
 /.crawl/
 /.crawlrc
@@ -142,6 +143,7 @@
 /.vim/spell/*.spl
 /.viminfo
 /.vscode-server
+/.vscode-shared
 /.vscode/argv.json
 /.vscode/extensions
 /.wget-hsts
@@ -194,4 +196,3 @@
 /vimtemp
 /VirtualBox VMs
 /workspaces
-
