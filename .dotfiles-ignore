@@ -62,23 +62,45 @@
 # Otherwise, don't ignore powershell files
 !/.config/powershell
 
+
+######################
 # Do ignore this stuff
+######################
+
+# Common document file types
 /*.gz
 /*.log
 /*.out
+/*.pdf
+/*.png
 /*.stackdump
 /*.txt
+
+# Test files
+/test
+/test.*
+
+/*.onmicrosoft.com
+/.Allure/
+/.android/
+/.asoundrc
 /.bash_history
 /.cache
 /.cpan
+/.crawl/
+/.crawlrc
 /.dbus-keyrings
+/.dbus/
 /.dia
 /.dir_colors
 /.dmrc
 /.dotfiles
 /.dotfiles-overlay
 /.dotnet
+/.enigma/
+/.enigmarc.xml
 /.face
+/.fltk/
 /.gem
 /.gimp-2.8
 /.git-for-windows-updater
@@ -90,13 +112,17 @@
 /.gtkrc-xfce
 /.hushlogin
 /.idlerc
+/.jackdrc
 /.lesshst
+/.links2/
 /.linuxmint/
+/.lmmsrc.xml
 /.local/
 /.mono
 /.motd_shown
 /.mozilla
 /.nanorc
+/.neverball/
 /.pam_environment
 /.parallel
 /.pki
@@ -128,6 +154,7 @@
 /.zcompdump
 /.zhistory
 /.zshrc
+/.zynaddsubfx*
 /AppData
 /bin/eview
 /bin/evim
@@ -148,9 +175,10 @@
 /Documents
 /dotfiles
 /Downloads
+/go
 /installs
 /jlog
-/go
+/obsidian
 /OneDrive*
 /Oracle Exports
 /Oracle/oracle.oracledevtools
@@ -158,7 +186,6 @@
 /perl5
 /Pictures
 /RPM Performance Coatings
-/rpmpcg.onmicrosoft.com
 /screen-exchange
 /test-attachments
 /tmp
