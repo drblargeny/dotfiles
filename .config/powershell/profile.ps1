@@ -19,9 +19,9 @@ function prompt {
     if (Test-Path Variable:/PSDebugContext) { 
         $prefix = "[DBG]: ${prefix}"
     }
-    $username = "${env:USERNAME}@${env:COMPUTERNAME} " + $PSStyle.Reset
-    if ($env:USERDOMAIN) {
-        $username = "${env:USERDOMAIN}+${username}"
+    $username = [Environment]::UserName + '@' + [Environment]::MachineName + $PSStyle.Reset
+    if ([Environment]::UserDomainName -ne [Environment]::MachineName) {
+        $username = [Environment]::UserDomainName + "+${username}"
     }
     if ($isAdminRole) {
         $prefix = $PSStyle.Foreground.Red + "[ADMIN]:${prefix} " + $PSStyle.Foreground.Red + $username
