@@ -21,8 +21,15 @@ fails to start, ignores the linked file contents, or breaks the link
 after a change/save.  If the standard directory is a link to the flatpak
 directory, git rejects versioning any file content beyond the link.
 
-TODO: Need to look into using FUSE/bindfs to handle this through userspace
-mount points.
+What does work is to use a FUSE bindfs mount to map the flatpak directory
+onto the standard location.  For example:
+
+bindfs --no-allow-other -o nonempty \
+  ~/.var/app/com.github.hluk.copyq/config/copyq \
+  ~/.config/copyq
+
+You can add this to your UI session's startup applications so it will load
+automatically for your session.
 
 Windows
 -------
