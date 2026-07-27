@@ -142,6 +142,7 @@
 /.sudo_as_admin_successful
 /.termux/
 /.thumbnails
+/.thunderbird
 /.var
 /.vim-temp
 /.vim/.netrwhist
