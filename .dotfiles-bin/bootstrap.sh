@@ -78,7 +78,7 @@ fi
 dotfiles reset
 # 2. Restore any deleted files
 dotfiles status --short | sed -E '/^ ?D/!d;s/^ ?D +//' | while read f; do
-  dotfiles restore "$f"
+  dotfiles checkout -- "$f"
 done
 
 # 3. Set upstream for push
