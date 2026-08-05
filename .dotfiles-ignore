@@ -105,6 +105,7 @@
 /.dotnet
 /.enigma/
 /.enigmarc.xml
+/.esd_auth
 /.face
 /.fltk/
 /.gem
@@ -186,6 +187,7 @@
 /go
 /installs
 /jlog
+/logs
 /obsidian
 /OneDrive*
 /Oracle Exports
@@ -195,6 +197,7 @@
 /Pictures
 /RPM Performance Coatings
 /screen-exchange
+/springboot
 /test-attachments
 /tmp
 /vimfiles/.netrwhist
