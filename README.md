@@ -155,6 +155,18 @@ public.
 1. Pop any stashed changes and reconcile any files using the `config.`
    alias/command.
 
+#### Host-specific configuration
+
+If you have host-specific configuration, you'll likely want to put that in your "Overlay" repo.  For example, the minimal Git environment settings:
+
+```shell
+config. add ~/.bashrc.d/host.`hostname`
+
+config. commit -m 'Add config for '`hostname`
+
+config. push
+```
+
 ## Configuration
 
 * [Bash](.bashrc.d/README.md)
