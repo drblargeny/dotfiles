@@ -160,7 +160,7 @@ public.
 If you have host-specific configuration, you'll likely want to put that in your "Overlay" repo.  For example, the minimal Git environment settings:
 
 ```shell
-config. add ~/.bashrc.d/host.`hostname`
+config. add -f ~/.bashrc.d/host.`hostname`
 
 config. commit -m 'Add config for '`hostname`
 
