@@ -11,8 +11,17 @@ else
   DOTFILES_WORK_TREE="$HOME"
 fi
 
+# Check if we want to override any environment settings for the user
+git --git-dir $DOTFILES_GIT_DIR config --local user.email > /dev/null ||
+git --git-dir $DOTFILES_GIT_DIR config --local user.name > /dev/null ||
+git --git-dir $DOTFILES_GIT_DIR config --local author.email > /dev/null ||
+git --git-dir $DOTFILES_GIT_DIR config --local author.name > /dev/null ||
+git --git-dir $DOTFILES_GIT_DIR config --local committer.email > /dev/null ||
+git --git-dir $DOTFILES_GIT_DIR config --local committer.name > /dev/null &&
+DOTFILES_ENV='env -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u EMAIL '
+
 # Set up alias for config command, which manages the main configuration
-alias config='git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$DOTFILES_WORK_TREE"'
+alias config='${DOTFILES_ENV}git --git-dir="$DOTFILES_GIT_DIR" --work-tree="$DOTFILES_WORK_TREE"'
 
 # Check if an overlay directory is present
 if [[ -d "$HOME"/.dotfiles-overlay ]]; then
@@ -23,6 +32,15 @@ if [[ -d "$HOME"/.dotfiles-overlay ]]; then
     DOTFILES_OVERLAY_DIR="$HOME/.dotfiles-overlay/"
   fi
 
+  # Check if we want to override any environment settings for the user
+  git --git-dir $DOTFILES_OVERLAY_DIR config --local user.email > /dev/null ||
+  git --git-dir $DOTFILES_OVERLAY_DIR config --local user.name > /dev/null ||
+  git --git-dir $DOTFILES_OVERLAY_DIR config --local author.email > /dev/null ||
+  git --git-dir $DOTFILES_OVERLAY_DIR config --local author.name > /dev/null ||
+  git --git-dir $DOTFILES_OVERLAY_DIR config --local committer.email > /dev/null ||
+  git --git-dir $DOTFILES_OVERLAY_DIR config --local committer.name > /dev/null &&
+  DOTFILES_OVERLAY_ENV='env -u GIT_AUTHOR_NAME -u GIT_AUTHOR_EMAIL -u GIT_COMMITTER_NAME -u GIT_COMMITTER_EMAIL -u EMAIL '
+
   # Set up the config. alias for maintaining the overlay directory
-  alias config.='git --git-dir="$DOTFILES_OVERLAY_DIR" --work-tree="$DOTFILES_WORK_TREE"'
+  alias config.='${DOTFILES_OVERLAY_ENV}git --git-dir="$DOTFILES_OVERLAY_DIR" --work-tree="$DOTFILES_WORK_TREE"'
 fi
