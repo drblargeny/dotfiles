@@ -130,7 +130,10 @@ $PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'
 # For all cmdlets
 $PSDefaultParameterValues['*:Encoding'] = 'utf8' 
 
-# Add scripts to PATH
+# Add PS profile scripts (~/.config/my-scripts) to PATH
 # From: https://stackoverflow.com/questions/1011243/where-to-put-powershell-scripts
-$ProfileRoot = (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$env:PATH += ";$ProfileRoot\my-scripts"
+$PSProfileRoot = (Split-Path -Parent $MyInvocation.MyCommand.Path)
+$env:PATH += ";$PSProfileRoot\my-scripts"
+
+# Add ~/.local/bin utilities to PATH
+$env:PATH += ";$env:USERPROFILE\.local\bin"
