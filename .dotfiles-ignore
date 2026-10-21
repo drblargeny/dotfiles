@@ -81,6 +81,15 @@
 /*.stackdump
 /*.txt
 
+# pcap captures and related files
+/*SSLKEYLOGFILE*
+/*.cap
+/*.dmp
+/*.key
+/*.ntar
+/*.pcap
+/*.pcapng
+
 # Test files
 /test
 /test.*
