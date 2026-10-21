@@ -37,3 +37,12 @@ TARGET=`/usr/bin/cygpath -w "$TARGET"`
 
 # Open the Windows path with explorer.exe
 explorer.exe "$TARGET"
+
+# Exit with an appropriate exit code
+ERROR=$?
+if [[ $ERROR == 1 ]]; then
+  # Status of 1 is normal for explore.exe
+  exit 0
+else
+  exit $ERROR
+fi
