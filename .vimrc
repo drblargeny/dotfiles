@@ -295,9 +295,9 @@ set nowrap
 " 2. Consolas - Available on Windows
 " 3. Courier New - Available on many systems
 if has('nvim')
-  set guifont=DejaVu\ Sans\ Mono:h12:cDEFAULT,Consolas:h12:cDEFAULT,Courier\ New:h12:cDEFAULT
+  set guifont=JuliaMono:h12:cDEFAULT,DejaVu\ Sans\ Mono:h12:cDEFAULT,Consolas:h12:cDEFAULT,Courier\ New:h12:cDEFAULT
 else
-  set guifont=DejaVu_Sans_Mono:h12:cDEFAULT,Consolas:h12:cDEFAULT,Courier_New:h12:b:cDEFAULT
+  set guifont=JuliaMono:h12:cDEFAULT,DejaVu_Sans_Mono:h12:cDEFAULT,Consolas:h12:cDEFAULT,Courier_New:h12:b:cDEFAULT
 endif
 
 " Unicode support: http://vim.wikia.com/wiki/Working_with_Unicode

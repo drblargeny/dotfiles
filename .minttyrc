@@ -1,7 +1,7 @@
 Transparency=off
 OpaqueWhenFocused=yes
 CursorType=block
-Font=DejaVu Sans Mono
+Font=JuliaMono
 FontHeight=12
 FontIsBold=no
 BoldAsFont=no
