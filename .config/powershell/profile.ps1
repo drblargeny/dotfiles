@@ -136,4 +136,8 @@ $PSProfileRoot = (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $env:PATH += ";$PSProfileRoot\my-scripts"
 
 # Add ~/.local/bin utilities to PATH
-$env:PATH += ";$env:USERPROFILE\.local\bin"
+$env:PATH += ";$HOME\.local\bin"
+# Include the path from the HOME environment variable, if different
+if ($null -ne $env:HOME -and $env:HOME -ne $HOME){
+    $env:PATH += ";$env:HOME\.local\bin"
+}

@@ -1,4 +1,10 @@
 # Source XDG config location
-if (Test-Path -Path "$env:XDG_CONFIG_HOME\powershell\$($MyInvocation.MyCommand.Name)") {
-    . "$env:XDG_CONFIG_HOME\powershell\$($MyInvocation.MyCommand.Name)"
+# 1. Prefer XDG_CONFIG_HOME environment variable
+# 2. ~/.config based on the HOME environment variable
+# 3. ~/.config based on the HOME PowerShell variable
+foreach ($config in "$env:XDG_CONFIG_HOME","$env:HOME\.config","$HOME\.config") {
+    if ($config -ne "" -and (Test-Path -Path "$config\powershell\$($MyInvocation.MyCommand.Name)")) {
+        . "$config\powershell\$($MyInvocation.MyCommand.Name)"
+        break
+    }
 }
