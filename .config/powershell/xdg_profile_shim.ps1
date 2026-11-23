@@ -4,7 +4,7 @@
 # 3. ~/.local/share based on the HOME PowerShell variable
 foreach ($config in "$env:XDG_DATA_HOME","$(Join-Path $env:HOME .local share)","$(Join-Path $HOME .local share)") {
     if ($config -ne "" -and (Test-Path -Path "$(Join-Path $config powershell Modules)")) {        
-        $env:PSModulePath = "$(Join-Path $config powershell Modules);$env:PSModulePath"
+        $env:PSModulePath = "$(Join-Path $config powershell Modules)$([IO.Path]::PathSeparator)$env:PSModulePath"
         break
     }
 }

@@ -133,11 +133,11 @@ $PSDefaultParameterValues['*:Encoding'] = 'utf8'
 # Add PS profile scripts (~/.config/my-scripts) to PATH
 # From: https://stackoverflow.com/questions/1011243/where-to-put-powershell-scripts
 $PSProfileRoot = (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$env:PATH += ";$(Join-Path $PSProfileRoot my-scripts)"
+$env:PATH += "$([IO.Path]::PathSeparator)$(Join-Path $PSProfileRoot my-scripts)"
 
 # Add ~/.local/bin utilities to PATH
-$env:PATH += ";$(Join-Path $HOME .local bin)"
+$env:PATH += "$([IO.Path]::PathSeparator)$(Join-Path $HOME .local bin)"
 # Include the path from the HOME environment variable, if different
 if ($null -ne $env:HOME -and $env:HOME -ne $HOME){
-    $env:PATH += ";$(Join-Path $env:HOME .local bin)"
+    $env:PATH += "$([IO.Path]::PathSeparator)$(Join-Path $env:HOME .local bin)"
 }
